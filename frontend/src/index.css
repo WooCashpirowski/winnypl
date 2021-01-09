@@ -19,4 +19,14 @@
 
 body {
   font-family: 'Poppins', sans-serif;
+  color: var(--dark);
+}
+
+a {
+  text-decoration: none;
+  color: var(--dark);
+}
+
+main {
+  min-height: 80vh;
 }
