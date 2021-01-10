@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/img/logo.svg';
 import { HeaderStyled } from './HeaderStyled';
@@ -10,13 +10,26 @@ const Header = () => {
   const [showNav, setShowNav] = useState(false);
   const toggleNav = () => setShowNav(!showNav);
   const closeNav = () => setShowNav(false);
+  const [lastYPos, setLastYPos] = useState(0);
+
+  useEffect(() => {
+    function handleScroll() {
+      setLastYPos(window.pageYOffset);
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastYPos]);
 
   return (
     <HeaderStyled>
-      <button type="button" className="toggler" onClick={toggleNav}>
+      <button
+        type="button"
+        className={lastYPos > 100 ? 'toggler small' : 'toggler'}
+        onClick={toggleNav}
+      >
         {showNav ? <IoMdClose /> : <HiOutlineMenuAlt3 />}
       </button>
-      <nav>
+      <nav className={lastYPos > 100 ? 'small' : ''}>
         <NavLink onClick={closeNav} className="logo" to="/">
           <img src={logo} alt="winny.pl" />
         </NavLink>

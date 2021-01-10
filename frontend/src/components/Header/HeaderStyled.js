@@ -76,6 +76,9 @@ export const HeaderStyled = styled.header`
   }
   @media (max-width: 960px) {
     position: relative;
+    z-index: 3;
+    position: fixed;
+    width: 100%;
     .toggler {
       display: block;
       position: absolute;
@@ -86,6 +89,11 @@ export const HeaderStyled = styled.header`
       background: none;
       border: none;
       cursor: pointer;
+      outline: none;
+      &.small {
+        z-index: 100;
+        top: 2px;
+      }
     }
     nav {
       flex-direction: column;
@@ -96,7 +104,7 @@ export const HeaderStyled = styled.header`
         top: 100px;
         left: -100%;
         opacity: 0;
-        transition: all 0.3s ease;
+        transition: all 0.5s ease;
         background: var(--light-pink);
         height: calc(100vh - 100px);
         &.active {
@@ -142,8 +150,13 @@ export const HeaderStyled = styled.header`
       .logo {
         flex: 12;
         img {
-          margin: 1rem 0 0;
+          margin: 2.5rem 0 0;
+          width: 200px;
         }
+      }
+      transition: all 0.5s ease;
+      &.small {
+        transform: translateY(-50px);
       }
     }
   }
