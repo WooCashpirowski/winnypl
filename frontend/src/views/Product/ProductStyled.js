@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import ProductView from "./ProductView";
 
 const ProductStyled = styled.section`
   .product-wrapper {
@@ -65,6 +64,10 @@ const ProductStyled = styled.section`
           span {
             color: var(--dark-secondary);
           }
+        }
+        &:disabled {
+          pointer-events: none;
+          opacity: 0.7;
         }
       }
     }

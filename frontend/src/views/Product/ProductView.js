@@ -38,11 +38,7 @@ const ProductView = ({ match }) => {
               {product.countInStock > 0 ? "W magazynie" : "Niedostępny"}
             </span>
           </p>
-          <button
-            type="button"
-            disabled={product.countInStock === 0}
-            onClick={() => console.log("clicked")}
-          >
+          <button type="button" disabled={product.countInStock === 0}>
             <div className="slide" />
             <span>Dodaj do koszyka</span>
           </button>
