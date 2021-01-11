@@ -1,9 +1,19 @@
 {
+  "name": "winnypl",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/WooCashpirowski/winnypl.git",
+  "author": "WooCashpirowski <cashpirowski@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "bootstrap": "^4.5.3",
+    "express": "^4.17.1",
     "react-bootstrap": "^1.4.3",
     "react-icons": "^4.1.0",
     "react-router-dom": "^5.2.0",
     "styled-components": "^5.2.1"
+  },
+  "scripts": {
+    "start": "node backend/server"
   }
 }
