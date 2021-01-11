@@ -1,16 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Rating from "../../components/Rating/Rating";
-import products from "../../products";
-import { ImHome } from "react-icons/im";
-import ProductStyled from "./ProductStyled";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Rating from '../../components/Rating/Rating';
+import products from '../../products';
+import { ImHome } from 'react-icons/im';
+import ProductStyled from './ProductStyled';
 
 const ProductView = ({ match }) => {
-  const product = products.find((p) => p._id === parseInt(match.params.id));
+  const product = products.find((p) => p._id === match.params.id);
   return (
     <ProductStyled>
       <Link to="/" className="link-btn">
-        {" "}
+        {' '}
         <ImHome /> Wróć
       </Link>
       <div className="product-wrapper">
@@ -33,9 +33,9 @@ const ProductView = ({ match }) => {
             Cena: <span>{product.price} zł</span>
           </p>
           <p>
-            Status:{" "}
+            Status:{' '}
             <span>
-              {product.countInStock > 0 ? "W magazynie" : "Niedostępny"}
+              {product.countInStock > 0 ? 'W magazynie' : 'Niedostępny'}
             </span>
           </p>
           <button type="button" disabled={product.countInStock === 0}>
