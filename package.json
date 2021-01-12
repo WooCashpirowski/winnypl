@@ -6,21 +6,17 @@
   "repository": "https://github.com/WooCashpirowski/winnypl.git",
   "author": "WooCashpirowski <cashpirowski@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "axios": "^0.21.1",
-    "bootstrap": "^4.5.3",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "react-bootstrap": "^1.4.3",
-    "react-icons": "^4.1.0",
-    "react-router-dom": "^5.2.0",
-    "styled-components": "^5.2.1"
-  },
   "scripts": {
     "start": "node backend/server",
     "server": "nodemon backend/server",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.11"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
