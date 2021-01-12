@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import axios from 'axios';
+
 import { HomeStyled } from './HomeStyled';
 
 const Home = () => {
