@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const ProductCardStyled = styled.div`
   text-align: center;
@@ -7,6 +7,7 @@ const ProductCardStyled = styled.div`
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
   position: relative;
   overflow: hidden;
+  background: white;
   img {
     width: 200px;
     transition: all 0.5s ease;
@@ -26,7 +27,7 @@ const ProductCardStyled = styled.div`
     }
   }
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 120px;
     height: 120px;
@@ -58,8 +59,9 @@ const ProductCardStyled = styled.div`
     }
   }
   &:hover {
+    background: #ebeced;
     img {
-      transform: scale(1.5) translateY(-36px);
+      transform: scale(1.2) translateY(-30px);
     }
   }
 `;

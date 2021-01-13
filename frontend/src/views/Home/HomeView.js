@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { listProducts } from '../../redux/actions/productActions';
-import ProductCard from '../../components/ProductCard/ProductCard';
-import { HomeStyled } from './HomeStyled';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../../redux/actions/productActions";
+import ProductCard from "../../components/ProductCard/ProductCard";
+import { HomeStyled } from "./HomeStyled";
+import Loader from "../../components/Loader/Loader";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const Home = () => {
   return (
     <HomeStyled>
       {loading ? (
-        <h1 className="section-header">Ładowanie ...</h1>
+        <Loader />
       ) : error ? (
         <p>{error}</p>
       ) : (
