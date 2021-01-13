@@ -4,6 +4,7 @@ import { listProducts } from "../../redux/actions/productActions";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { HomeStyled } from "./HomeStyled";
 import Loader from "../../components/Loader/Loader";
+import Message from "../../components/Message/Message";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Home = () => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <p>{error}</p>
+        <Message>{error}</Message>
       ) : (
         <>
           <h1 className="section-header">Polecane</h1>

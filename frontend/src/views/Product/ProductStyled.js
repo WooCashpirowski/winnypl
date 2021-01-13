@@ -4,6 +4,13 @@ const ProductStyled = styled.section`
   .product-wrapper {
     display: flex;
     align-items: flex-start;
+    /* background: white; */
+    background: linear-gradient(
+      90deg,
+      #ffffff 42.9%,
+      rgba(235, 236, 237, 0) 100%
+    );
+    padding: 1rem;
     .image-section {
       flex: 4;
       img {
