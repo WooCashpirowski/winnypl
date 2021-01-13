@@ -4,7 +4,6 @@ const ProductStyled = styled.section`
   .product-wrapper {
     display: flex;
     align-items: flex-start;
-    /* background: white; */
     background: linear-gradient(
       90deg,
       #ffffff 42.9%,
@@ -34,8 +33,15 @@ const ProductStyled = styled.section`
         &:first-child {
           border-bottom: none;
         }
+        &:nth-child(3) {
+          border-top: none;
+        }
         span {
           font-weight: 500;
+          select {
+            width: 50px;
+            padding-left: 8px;
+          }
         }
       }
       button {

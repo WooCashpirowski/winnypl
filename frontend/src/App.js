@@ -1,8 +1,9 @@
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import HomeView from './views/Home/HomeView';
-import ProductView from './views/Product/ProductView';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import HomeView from "./views/Home/HomeView";
+import ProductView from "./views/Product/ProductView";
+import CartView from "./views/Cart/CartView";
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <Header />
       <main>
         <Route path="/" component={HomeView} exact />
-        <Route path="/product/:id" component={ProductView} />
+        <Route path="/produkt/:id" component={ProductView} />
+        <Route path="/koszyk/:id?" component={CartView} />
       </main>
       <Footer />
     </Router>
