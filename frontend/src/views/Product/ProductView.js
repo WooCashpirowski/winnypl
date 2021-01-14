@@ -9,7 +9,7 @@ import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
 
 const ProductView = ({ match, history }) => {
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
@@ -19,7 +19,7 @@ const ProductView = ({ match, history }) => {
   }, [dispatch, match]);
 
   const addToCart = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
+    history.push(`/koszyk/${match.params.id}?qty=${qty}`);
   };
 
   return (
