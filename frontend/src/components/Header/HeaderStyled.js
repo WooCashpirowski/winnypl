@@ -1,8 +1,20 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const HeaderStyled = styled.header`
   .toggler {
     display: none;
+  }
+  .profile-info {
+    position: absolute;
+    top: 5px;
+    color: white;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: lighter;
+    a {
+      color: white;
+    }
   }
   nav {
     width: 100%;
@@ -61,6 +73,9 @@ export const HeaderStyled = styled.header`
             &:hover {
               color: #fff;
             }
+            .logout {
+              width: 24px;
+            }
           }
         }
         input {
@@ -71,6 +86,11 @@ export const HeaderStyled = styled.header`
       .nav-link {
         color: var(--light-pink);
         text-decoration: none;
+        font-weight: lighter;
+        &.logout {
+          cursor: pointer;
+          font-size: 1.2rem;
+        }
       }
     }
   }
@@ -79,6 +99,9 @@ export const HeaderStyled = styled.header`
     z-index: 3;
     position: fixed;
     width: 100%;
+    .profile-info {
+      display: none;
+    }
     .toggler {
       display: block;
       position: absolute;
@@ -106,18 +129,18 @@ export const HeaderStyled = styled.header`
         opacity: 0;
         transition: all 0.5s ease;
         background: var(--light-pink);
-        height: calc(100vh - 100px);
+        min-height: 100vh;
         &.active {
           left: 0;
           opacity: 1;
           z-index: 0;
         }
         .nav-links {
-          flex: 10;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           font-size: 24px;
+          flex: 1;
           .nav-link {
             margin-left: 0;
             padding: 1rem;
@@ -125,21 +148,19 @@ export const HeaderStyled = styled.header`
           }
         }
         .user-nav {
-          flex: 10;
+          flex: 1;
           .user-nav-links {
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            padding: 1rem;
-            margin-bottom: 0;
+            flex-wrap: wrap;
+            padding-top: 1rem;
+            margin-bottom: 2rem;
+            background: var(--dark-red);
             .nav-link {
-              margin: 1rem 0 0;
-              padding: 1rem 2rem;
-              font-size: 24px;
-              color: var(--dark);
-              &:first-child {
-                background: var(--pink);
-              }
+              margin: 0;
+              padding: 0 1.4rem;
+              font-size: 32px;
+              color: var(--light-pink);
             }
           }
           input {

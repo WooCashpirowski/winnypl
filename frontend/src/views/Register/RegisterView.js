@@ -3,33 +3,38 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../../components/Message/Message";
 import Loader from "../../components/Loader/Loader";
-import { login } from "../../redux/actions/userActions";
-import LoginStyled from "./LoginStyled";
+import { register } from "../../redux/actions/userActions";
+import RegisterStyled from "./RegisterStyled";
 import FormContainer from "../../components/FormContainer/FormContainer";
 
-const LoginView = ({ location, history }) => {
+const RegisterView = ({ history }) => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, userInfo, error } = userLogin;
-
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
 
   useEffect(() => {
     if (userInfo) {
-      history.push(redirect);
+      history.push("/");
     }
-  }, [history, userInfo, redirect]);
+  }, [history, userInfo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    if (password !== confirmPassword) {
+      setMessage("Hasła nie są jednakowe");
+    } else {
+      dispatch(register(name, email, password));
+    }
   };
 
   return (
-    <LoginStyled>
+    <RegisterStyled>
       {error && (
         <Message>
           {error}{" "}
@@ -38,12 +43,20 @@ const LoginView = ({ location, history }) => {
           </span>
         </Message>
       )}
+      {message && <Message>{message}</Message>}
       {loading ? (
         <Loader />
       ) : (
         <FormContainer>
-          <h1 className="section-header">Logowanie</h1>
+          <h1 className="section-header">Rejestracja</h1>
           <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="imię i nazwisko"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            ></input>
             <input
               type="email"
               placeholder="email"
@@ -58,19 +71,26 @@ const LoginView = ({ location, history }) => {
               onChange={(e) => setPassword(e.target.value)}
               required
             ></input>
+            <input
+              type="password"
+              placeholder="powtórz hasło"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            ></input>
             <button type="submit" variant="primary">
               <div className="slide" />
-              <span>Zaloguj się</span>
+              <span>Zarejestruj się</span>
             </button>
           </form>
           <div className="goto-link">
-            Pierwszy raz u nas?
-            <Link to="/rejestracja"> Zarejestruj się</Link>
+            Masz już konto?
+            <Link to="/zaloguj"> Zaloguj się</Link>
           </div>
         </FormContainer>
       )}
-    </LoginStyled>
+    </RegisterStyled>
   );
 };
 
-export default LoginView;
+export default RegisterView;

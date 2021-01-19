@@ -1,39 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import logo from '../../assets/img/logo.svg';
-import { HeaderStyled } from './HeaderStyled';
-import { ImCart, ImUser } from 'react-icons/im';
-import { HiOutlineMenuAlt3 } from 'react-icons/hi';
-import { IoMdClose } from 'react-icons/io';
+import React, { useState, useEffect } from "react";
+import { NavLink, withRouter } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import logo from "../../assets/img/logo.svg";
+import { HeaderStyled } from "./HeaderStyled";
+import { ImCart, ImUser } from "react-icons/im";
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { IoMdClose } from "react-icons/io";
+import { FiLogOut } from "react-icons/fi";
+import { logout } from "../../redux/actions/userActions";
 
-const Header = () => {
+const Header = ({ history }) => {
   const [showNav, setShowNav] = useState(false);
   const toggleNav = () => setShowNav(!showNav);
   const closeNav = () => setShowNav(false);
   const [lastYPos, setLastYPos] = useState(0);
 
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.userLogin);
+
   useEffect(() => {
     function handleScroll() {
       setLastYPos(window.pageYOffset);
     }
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [lastYPos]);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    closeNav();
+    history.push("/");
+  };
 
   return (
     <HeaderStyled>
       <button
         type="button"
-        className={lastYPos > 100 ? 'toggler small' : 'toggler'}
+        className={lastYPos > 100 ? "toggler small" : "toggler"}
         onClick={toggleNav}
       >
         {showNav ? <IoMdClose /> : <HiOutlineMenuAlt3 />}
       </button>
-      <nav className={lastYPos > 100 ? 'small' : ''}>
+      {userInfo && (
+        <p className="profile-info">
+          Witaj, <NavLink to="moje-konto">{userInfo.name}</NavLink>
+        </p>
+      )}
+      <nav className={lastYPos > 100 ? "small" : ""}>
         <NavLink onClick={closeNav} className="logo" to="/">
           <img src={logo} alt="winny.pl" />
         </NavLink>
-        <div className={showNav ? 'navbar active' : 'navbar'}>
+        <div className={showNav ? "navbar active" : "navbar"}>
           <div className="nav-links">
             <NavLink onClick={closeNav} className="nav-link" to="/katalog">
               KATALOG
@@ -50,12 +67,27 @@ const Header = () => {
           </div>
           <div className="user-nav">
             <div className="user-nav-links">
-              <NavLink onClick={closeNav} className="nav-link" to="/zaloguj">
-                <ImUser /> Zaloguj
-              </NavLink>
               <NavLink onClick={closeNav} className="nav-link" to="/koszyk">
-                <ImCart /> Koszyk
+                <ImCart style />
               </NavLink>
+              {userInfo ? (
+                <>
+                  <NavLink
+                    onClick={closeNav}
+                    className="nav-link"
+                    to="/moje-konto"
+                  >
+                    <ImUser />
+                  </NavLink>
+                  <div className="nav-link logout" onClick={handleLogout}>
+                    <FiLogOut />
+                  </div>
+                </>
+              ) : (
+                <NavLink onClick={closeNav} className="nav-link" to="/zaloguj">
+                  Zaloguj
+                </NavLink>
+              )}
             </div>
             <input type="text" placeholder="Znajdź w naszym sklepie" />
           </div>
@@ -65,4 +97,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default withRouter(Header);

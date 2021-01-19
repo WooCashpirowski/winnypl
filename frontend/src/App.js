@@ -5,6 +5,7 @@ import HomeView from "./views/Home/HomeView";
 import ProductView from "./views/Product/ProductView";
 import CartView from "./views/Cart/CartView";
 import LoginView from "./views/Login/LoginView";
+import RegisterView from "./views/Register/RegisterView";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/produkt/:id" component={ProductView} />
         <Route path="/koszyk/:id?" component={CartView} />
         <Route path="/zaloguj" component={LoginView} />
+        <Route path="/rejestracja" component={RegisterView} />
       </main>
       <Footer />
     </Router>
