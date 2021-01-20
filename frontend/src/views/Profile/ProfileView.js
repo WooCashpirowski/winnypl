@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileStyled from "./ProfileStyled";
-import { getUserDetails } from "../../redux/actions/userActions";
+import {
+  getUserDetails,
+  updateUserProfile,
+} from "../../redux/actions/userActions";
+import { USER_UPDATE_RESET } from "../../redux/constants/userConstants";
 import Message from "../../components/Message/Message";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
@@ -16,26 +20,28 @@ const ProfileView = ({ history }) => {
   const dispatch = useDispatch();
   const { loading, error, user } = useSelector((state) => state.userDetails);
   const { userInfo } = useSelector((state) => state.userLogin);
+  const { success } = useSelector((state) => state.userUpdate);
 
   useEffect(() => {
     if (!userInfo) {
       history.push("/zaloguj");
     } else {
-      if (!user.name) {
+      if (!user || !user.name || success) {
+        dispatch({ type: USER_UPDATE_RESET });
         dispatch(getUserDetails("profile"));
       } else {
         setName(user.name);
         setEmail(user.email);
       }
     }
-  }, [history, user, userInfo, dispatch]);
+  }, [history, user, userInfo, dispatch, success]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setMessage("Hasła nie są tożsame");
     } else {
-      // update profile
+      dispatch(updateUserProfile({ id: user._id, name, email, password }));
     }
   };
 
@@ -58,6 +64,7 @@ const ProfileView = ({ history }) => {
           <div className="my-account-wrapper">
             <div className="form">
               <h3>Dane użytkownika</h3>
+              {success && <h4>Dane zostały zmienione!</h4>}
               <form onSubmit={handleSubmit}>
                 <label>
                   <p>Imię i nazwisko</p>
@@ -65,7 +72,6 @@ const ProfileView = ({ history }) => {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    required
                   ></input>
                 </label>
                 <label>
@@ -74,7 +80,6 @@ const ProfileView = ({ history }) => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
                   ></input>
                 </label>
                 <label>
@@ -83,7 +88,6 @@ const ProfileView = ({ history }) => {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    required
                   ></input>
                 </label>
                 <label>
@@ -92,10 +96,13 @@ const ProfileView = ({ history }) => {
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
                   ></input>
                 </label>
-                <button type="submit" variant="primary">
+                <button
+                  type="submit"
+                  variant="primary"
+                  disabled={!name && !email && !password && !confirmPassword}
+                >
                   <div className="slide" />
                   <span>Zatwierdź</span>
                 </button>

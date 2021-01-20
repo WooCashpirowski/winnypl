@@ -9,6 +9,10 @@ const ProfileStyled = styled.section`
     }
     .form {
       flex: 1;
+      h4 {
+        margin-bottom: 1rem;
+        color: green;
+      }
       form {
         display: flex;
         flex-direction: column;
