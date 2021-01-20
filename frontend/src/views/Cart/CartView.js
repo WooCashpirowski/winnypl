@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../../redux/actions/cartActions";
-import Message from "../../components/Message/Message";
-import CartStyled from "./CartStyled";
-import { RiDeleteBin2Fill } from "react-icons/ri";
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, removeFromCart } from '../../redux/actions/cartActions';
+import Message from '../../components/Message/Message';
+import CartStyled from './CartStyled';
+import { RiDeleteBin2Fill } from 'react-icons/ri';
 
 const CartView = ({ match, location, history }) => {
   const productId = match.params.id;
-  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
+  const qty = location.search ? Number(location.search.split('=')[1]) : 1;
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -19,7 +19,7 @@ const CartView = ({ match, location, history }) => {
   }, [dispatch, productId, qty]);
 
   const handleCheckout = () => {
-    history.push("/login?redirect=shipping");
+    history.push('/zaloguj?redirect=dostawa');
   };
 
   const handleRemoveFromCart = (id) => {
@@ -31,7 +31,7 @@ const CartView = ({ match, location, history }) => {
       <CartStyled>
         {cartItems.length === 0 ? (
           <Message>
-            Twój koszyk jest pusty{" "}
+            Twój koszyk jest pusty{' '}
             <span>
               <Link to="/">Wróć do strony głównej</Link>
             </span>
@@ -61,7 +61,7 @@ const CartView = ({ match, location, history }) => {
                         value={item.qty}
                         onChange={(e) =>
                           dispatch(
-                            addToCart(item.product, Number(e.target.value))
+                            addToCart(item.product, Number(e.target.value)),
                           )
                         }
                       >
@@ -85,15 +85,15 @@ const CartView = ({ match, location, history }) => {
               <div className="summary">
                 <h1>Podsumowanie</h1>
                 <p>
-                  Ilość produktów:{" "}
+                  Ilość produktów:{' '}
                   {cartItems.reduce((acc, item) => acc + item.qty, 0)}
                 </p>
                 <p>
-                  Łączna cena:{" "}
+                  Łączna cena:{' '}
                   <span>
                     {cartItems
                       .reduce((acc, item) => acc + item.qty * item.price, 0)
-                      .toFixed(2)}{" "}
+                      .toFixed(2)}{' '}
                     zł
                   </span>
                 </p>
