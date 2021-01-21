@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { saveShippingAddress } from '../../redux/actions/cartActions';
-import ShippingStyled from './ShippingStyled';
-import FormContainer from '../../components/FormContainer/FormContainer';
-import CheckoutSteps from '../../components/CheckoutSteps/CheckoutSteps';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { saveShippingAddress } from "../../redux/actions/cartActions";
+import ShippingStyled from "./ShippingStyled";
+import FormContainer from "../../components/FormContainer/FormContainer";
+import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
 
 const ShippingView = ({ history }) => {
   const { shippingAddress: shipping } = useSelector((state) => state.cart);
 
-  const [address, setAddress] = useState(shipping.address);
-  const [city, setCity] = useState(shipping.city);
-  const [postalCode, setPostalCode] = useState(shipping.postalCode);
-  const [country, setCountry] = useState(shipping.country);
+  const [address, setAddress] = useState(shipping.address || "");
+  const [city, setCity] = useState(shipping.city || "");
+  const [postalCode, setPostalCode] = useState(shipping.postalCode || "");
+  const [country, setCountry] = useState(shipping.country || "");
 
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
-    history.push('/platnosc');
+    history.push("/platnosc");
   };
 
   return (
@@ -28,6 +27,7 @@ const ShippingView = ({ history }) => {
       <CheckoutSteps step1 step2 />
       <FormContainer>
         <form onSubmit={handleSubmit}>
+          <h4>Podaj adres dostawy</h4>
           <input
             type="text"
             placeholder="Adres"

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const BreadCrumbs = styled.div`
   display: flex;
@@ -7,8 +7,11 @@ const BreadCrumbs = styled.div`
   width: 80%;
   margin: 1rem auto;
   p {
-    color: #666;
+    color: #999;
     pointer-events: none;
+    &.black {
+      color: black;
+    }
   }
 `;
 

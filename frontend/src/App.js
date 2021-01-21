@@ -1,19 +1,23 @@
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import HomeView from './views/Home/HomeView';
-import ProductView from './views/Product/ProductView';
-import CartView from './views/Cart/CartView';
-import LoginView from './views/Login/LoginView';
-import RegisterView from './views/Register/RegisterView';
-import ProfileView from './views/Profile/ProfileView';
-import ShippingView from './views/Shipping/ShippingView';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import HomeView from "./views/Home/HomeView";
+import ProductView from "./views/Product/ProductView";
+import CartView from "./views/Cart/CartView";
+import LoginView from "./views/Login/LoginView";
+import RegisterView from "./views/Register/RegisterView";
+import ProfileView from "./views/Profile/ProfileView";
+import ShippingView from "./views/Shipping/ShippingView";
+import PaymentView from "./views/Payment/PaymentView";
+import SummaryView from "./views/Summary/SummaryView";
 
 function App() {
   return (
     <Router>
       <Header />
       <main>
+        <Route path="/podsumowanie" component={SummaryView} />
+        <Route path="/platnosc" component={PaymentView} />
         <Route path="/dostawa" component={ShippingView} />
         <Route path="/produkt/:id" component={ProductView} />
         <Route path="/koszyk/:id?" component={CartView} />

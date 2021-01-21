@@ -15,6 +15,10 @@ const FormStyled = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+    h4 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
     input {
       padding: 0.7rem;
       margin: 0.5rem 0;
@@ -75,6 +79,9 @@ const FormStyled = styled.div`
         pointer-events: none;
         opacity: 0.7;
       }
+    }
+    .form-check {
+      padding: 0.5rem 0;
     }
   }
   .goto-link {
