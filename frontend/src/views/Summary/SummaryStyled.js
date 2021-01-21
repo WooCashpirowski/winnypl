@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const SummaryStyled = styled.section`
   min-height: calc(100vh - 100px);
@@ -68,6 +68,10 @@ const SummaryStyled = styled.section`
         font-weight: 400;
         padding: 1rem 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+      }
+      p.warning {
+        text-align: center;
+        color: red;
       }
       button {
         display: inline-block;

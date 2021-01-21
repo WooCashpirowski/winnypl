@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { saveShippingAddress } from "../../redux/actions/cartActions";
-import Message from "../../components/Message/Message";
-import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
-import SummaryStyled from "./SummaryStyled";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import CheckoutSteps from '../../components/CheckoutSteps/CheckoutSteps';
+import SummaryStyled from './SummaryStyled';
+import { createOrder } from '../../redux/actions/orderActions';
 
-const SummaryView = () => {
+const SummaryView = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress, paymentMethod, cartItems } = cart;
 
@@ -17,20 +16,41 @@ const SummaryView = () => {
 
   cart.total = (Number(cart.totalItems) + Number(cart.shipping)).toFixed(2);
 
+  const dispatch = useDispatch();
+
+  const { order, success, error } = useSelector((state) => state.orderCreate);
+
+  useEffect(() => {
+    if (success) {
+      history.push(`/order/${order._id}`);
+    }
+    // eslint-disable-next-line
+  }, [history, success]);
+
   const handlePlaceOrder = () => {
-    console.log("zamówienie złożone");
+    dispatch(
+      createOrder({
+        orderItems: cartItems,
+        shippingAddress,
+        paymentMethod,
+        itemsPrice: cart.totalItems,
+        shippingPrice: cart.shipping,
+        totalPrice: cart.total,
+      }),
+    );
   };
 
   return (
     <SummaryStyled>
       <h2 className="section-header">Podsumowanie</h2>
       <CheckoutSteps step1 step2 step3 step4 />
+      {}
       <div className="order-wrapper">
         <div className="order-blocks">
           <div className="order-block">
             <h4>Adres dostawy</h4>
             <p>
-              {shippingAddress.address}, {shippingAddress.city},{" "}
+              {shippingAddress.address}, {shippingAddress.city},{' '}
               {shippingAddress.postalCode}, {shippingAddress.country}
               <span>
                 <Link to="/dostawa">Zmień</Link>
@@ -77,6 +97,7 @@ const SummaryView = () => {
           <p>
             Razem <span>{cart.total} zł</span>
           </p>
+          {error && <p className="warning">{error}</p>}
           <button
             type="button"
             disabled={cartItems === 0}
