@@ -55,12 +55,6 @@ const Header = ({ history }) => {
             <NavLink onClick={closeNav} className="nav-link" to="/katalog">
               KATALOG
             </NavLink>
-            <NavLink onClick={closeNav} className="nav-link" to="/zestawy">
-              ZESTAWY
-            </NavLink>
-            <NavLink onClick={closeNav} className="nav-link" to="/akcesoria">
-              AKCESORIA
-            </NavLink>
             <NavLink onClick={closeNav} className="nav-link" to="/o-nas">
               O NAS
             </NavLink>

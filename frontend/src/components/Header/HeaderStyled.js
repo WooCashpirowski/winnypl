@@ -94,7 +94,7 @@ export const HeaderStyled = styled.header`
       }
     }
   }
-  @media (max-width: 960px) {
+  @media (max-width: 768px) {
     position: relative;
     z-index: 3;
     position: fixed;

@@ -36,6 +36,10 @@ h6 {
   font-weight: normal;
 }
 
+p {
+  font-size: 14px;
+}
+
 main {
   min-height: 80vh;
   padding: 1rem 0;
@@ -59,7 +63,7 @@ main {
   height: 24px;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 768px) {
   main {
     padding-top: 100px;
   }

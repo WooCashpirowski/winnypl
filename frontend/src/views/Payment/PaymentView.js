@@ -32,30 +32,32 @@ const PaymentView = ({ history }) => {
       <FormContainer>
         <form onSubmit={handleSubmit}>
           <h4>Wybierz metodę płatności</h4>
-          <Form.Check
-            type="radio"
-            label=" Blik"
-            id="Blik"
-            name="paymentMethod"
-            value="Blik"
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          ></Form.Check>
-          <Form.Check
-            type="radio"
-            label=" Karta kredytowa/debetowa"
-            id="Karta"
-            name="paymentMethod"
-            value="Karta"
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          ></Form.Check>
-          <Form.Check
-            type="radio"
-            label=" PayPal"
-            id="PayPal"
-            name="paymentMethod"
-            value="PayPal"
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          ></Form.Check>
+          <div className="checks">
+            <Form.Check
+              type="radio"
+              label=" Blik"
+              id="Blik"
+              name="paymentMethod"
+              value="Blik"
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            ></Form.Check>
+            <Form.Check
+              type="radio"
+              label=" Karta kredytowa/debetowa"
+              id="Karta"
+              name="paymentMethod"
+              value="Karta kredytowa/debetowa"
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            ></Form.Check>
+            <Form.Check
+              type="radio"
+              label=" PayPal"
+              id="PayPal"
+              name="paymentMethod"
+              value="PayPal"
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            ></Form.Check>
+          </div>
           <button type="submit" variant="primary" disabled={!paymentMethod}>
             <div className="slide" />
             <span>Przejdź dalej</span>

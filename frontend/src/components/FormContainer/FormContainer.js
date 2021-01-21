@@ -80,8 +80,12 @@ const FormStyled = styled.div`
         opacity: 0.7;
       }
     }
-    .form-check {
-      padding: 0.5rem 0;
+    .checks {
+      padding: 0.5rem;
+      background: rgba(255, 255, 255, 0.7);
+      .form-check {
+        padding: 0.5rem;
+      }
     }
   }
   .goto-link {
