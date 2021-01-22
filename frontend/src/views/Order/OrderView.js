@@ -3,6 +3,7 @@ import OrderStyled from "./OrderStyled";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderDetails } from "../../redux/actions/orderActions";
 import Loader from "../../components/Loader/Loader";
+import Message from "../../components/Message/Message";
 import { Link } from "react-router-dom";
 
 const OrderView = ({ match }) => {
@@ -28,6 +29,8 @@ const OrderView = ({ match }) => {
     <OrderStyled>
       {loading ? (
         <Loader />
+      ) : error ? (
+        <Message>{error}</Message>
       ) : (
         <>
           <h1 className="section-header">Twoje zamówienie</h1>
