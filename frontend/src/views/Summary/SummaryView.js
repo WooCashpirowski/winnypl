@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import CheckoutSteps from '../../components/CheckoutSteps/CheckoutSteps';
-import SummaryStyled from './SummaryStyled';
-import { createOrder } from '../../redux/actions/orderActions';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
+import SummaryStyled from "./SummaryStyled";
+import { createOrder } from "../../redux/actions/orderActions";
 
 const SummaryView = ({ history }) => {
   const cart = useSelector((state) => state.cart);
@@ -22,7 +22,7 @@ const SummaryView = ({ history }) => {
 
   useEffect(() => {
     if (success) {
-      history.push(`/order/${order._id}`);
+      history.push(`/zamowienie/${order._id}`);
     }
     // eslint-disable-next-line
   }, [history, success]);
@@ -36,7 +36,7 @@ const SummaryView = ({ history }) => {
         itemsPrice: cart.totalItems,
         shippingPrice: cart.shipping,
         totalPrice: cart.total,
-      }),
+      })
     );
   };
 
@@ -44,13 +44,12 @@ const SummaryView = ({ history }) => {
     <SummaryStyled>
       <h2 className="section-header">Podsumowanie</h2>
       <CheckoutSteps step1 step2 step3 step4 />
-      {}
       <div className="order-wrapper">
         <div className="order-blocks">
           <div className="order-block">
             <h4>Adres dostawy</h4>
             <p>
-              {shippingAddress.address}, {shippingAddress.city},{' '}
+              {shippingAddress.address}, {shippingAddress.city},{" "}
               {shippingAddress.postalCode}, {shippingAddress.country}
               <span>
                 <Link to="/dostawa">Zmień</Link>

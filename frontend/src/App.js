@@ -10,12 +10,14 @@ import ProfileView from "./views/Profile/ProfileView";
 import ShippingView from "./views/Shipping/ShippingView";
 import PaymentView from "./views/Payment/PaymentView";
 import SummaryView from "./views/Summary/SummaryView";
+import OrderView from "./views/Order/OrderView";
 
 function App() {
   return (
     <Router>
       <Header />
       <main>
+        <Route path="/zamowienie/:id" component={OrderView} />
         <Route path="/podsumowanie" component={SummaryView} />
         <Route path="/platnosc" component={PaymentView} />
         <Route path="/dostawa" component={ShippingView} />
