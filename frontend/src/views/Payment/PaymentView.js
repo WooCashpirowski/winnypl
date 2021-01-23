@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Form } from "react-bootstrap";
-import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
-import FormContainer from "../../components/FormContainer/FormContainer";
-import PaymentStyled from "./PaymentStyled";
-import { savePaymentMethod } from "../../redux/actions/cartActions";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form } from 'react-bootstrap';
+import CheckoutSteps from '../../components/CheckoutSteps/CheckoutSteps';
+import FormContainer from '../../components/FormContainer/FormContainer';
+import PaymentStyled from './PaymentStyled';
+import { savePaymentMethod } from '../../redux/actions/cartActions';
 
 const PaymentView = ({ history }) => {
   const { shippingAddress } = useSelector((state) => state.cart);
 
   useEffect(() => {
     if (shippingAddress.length === 0) {
-      history.push("/dostawa");
+      history.push('/dostawa');
     }
   }, [history, shippingAddress]);
 
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState('');
 
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
-    history.push("/podsumowanie");
+    history.push('/podsumowanie');
   };
 
   return (
@@ -35,11 +35,21 @@ const PaymentView = ({ history }) => {
           <div className="checks">
             <Form.Check
               type="radio"
+              label=" PayPal / Karta / Blik / Przelew"
+              id="PayPal"
+              name="paymentMethod"
+              value="PayPal"
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              checked
+            ></Form.Check>
+            <Form.Check
+              type="radio"
               label=" Blik"
               id="Blik"
               name="paymentMethod"
               value="Blik"
               onChange={(e) => setPaymentMethod(e.target.value)}
+              disabled
             ></Form.Check>
             <Form.Check
               type="radio"
@@ -48,14 +58,7 @@ const PaymentView = ({ history }) => {
               name="paymentMethod"
               value="Karta kredytowa/debetowa"
               onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check>
-            <Form.Check
-              type="radio"
-              label=" PayPal"
-              id="PayPal"
-              name="paymentMethod"
-              value="PayPal"
-              onChange={(e) => setPaymentMethod(e.target.value)}
+              disabled
             ></Form.Check>
           </div>
           <button type="submit" variant="primary" disabled={!paymentMethod}>

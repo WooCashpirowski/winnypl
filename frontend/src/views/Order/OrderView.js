@@ -1,29 +1,58 @@
-import React, { useEffect } from "react";
-import OrderStyled from "./OrderStyled";
-import { useDispatch, useSelector } from "react-redux";
-import { getOrderDetails } from "../../redux/actions/orderActions";
-import Loader from "../../components/Loader/Loader";
-import Message from "../../components/Message/Message";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { PayPalButton } from 'react-paypal-button-v2';
+import OrderStyled from './OrderStyled';
+import { getOrderDetails, payOrder } from '../../redux/actions/orderActions';
+import { ORDER_PAY_RESET } from '../../redux/constants/orderConstants';
+import Loader from '../../components/Loader/Loader';
+import Message from '../../components/Message/Message';
+import { Link } from 'react-router-dom';
 
 const OrderView = ({ match }) => {
   const orderId = match.params.id;
+  const [sdkReady, setSdkReady] = useState(false);
 
   const dispatch = useDispatch();
 
   const { loading, error, order } = useSelector((state) => state.orderDetails);
+  const { loading: loadingPay, success: successPay } = useSelector(
+    (state) => state.orderPay,
+  );
 
   useEffect(() => {
-    if (!order || order._id !== orderId) {
+    const addPayPalScript = async () => {
+      const { data: clientId } = await axios.get('/api/config/paypal');
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=PLN`;
+      script.async = true;
+      script.onload = () => setSdkReady(true);
+      document.body.appendChild(script);
+    };
+
+    if (!order || order._id !== orderId || successPay) {
+      dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
+    } else if (!order.isPaid) {
+      if (!window.paypal) {
+        addPayPalScript();
+      } else {
+        setSdkReady(true);
+      }
     }
-  }, [dispatch, order, orderId]);
+  }, [dispatch, order, orderId, successPay]);
 
   if (!loading) {
     order.itemsPrice = order.orderItems
       .reduce((a, { price, qty }) => a + price * qty, 0)
       .toFixed(2);
   }
+
+  const handlePaymentSuccess = (paymentResult) => {
+    console.log(paymentResult);
+    dispatch(payOrder(orderId, paymentResult));
+  };
 
   return (
     <OrderStyled>
@@ -41,8 +70,8 @@ const OrderView = ({ match }) => {
                 <p>Imię: {order.user.name}</p>
                 <p>Email: {order.user.email}</p>
                 <p>
-                  Adres: {order.shippingAddress.address},{" "}
-                  {order.shippingAddress.postalCode},{" "}
+                  Adres: {order.shippingAddress.address},{' '}
+                  {order.shippingAddress.postalCode},{' '}
                   {order.shippingAddress.city}, {order.shippingAddress.country},
                 </p>
                 {!order.isDelivered && (
@@ -52,8 +81,12 @@ const OrderView = ({ match }) => {
               <div className="order-block">
                 <h3>Metoda płatności</h3>
                 <p>{order.paymentMethod}</p>
-                {!order.isPaid && (
+                {!order.isPaid ? (
                   <p className="warning">Zamówienie nie opłacone</p>
+                ) : (
+                  <p className="success">
+                    Zamówienie opłacone {order.updatedAt}
+                  </p>
                 )}
               </div>
               <div className="order-block">
@@ -87,6 +120,20 @@ const OrderView = ({ match }) => {
               <p>
                 Razem <span>{order.totalPrice} zł</span>
               </p>
+              {!order.isPaid && (
+                <div className="button">
+                  {loadingPay && <Loader />}
+                  {!sdkReady ? (
+                    <Loader />
+                  ) : (
+                    <PayPalButton
+                      amount={order.totalPrice}
+                      onSuccess={handlePaymentSuccess}
+                      currency="PLN"
+                    />
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </>
