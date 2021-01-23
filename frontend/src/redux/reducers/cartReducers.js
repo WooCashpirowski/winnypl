@@ -3,11 +3,12 @@ import {
   CART_REMOVE_ITEM,
   CART_SAVE_SHIPPING_ADDRESS,
   CART_SAVE_PAYMENT_METHOD,
-} from "../constants/cartConstants";
+  CART_CLEAR_ITEMS,
+} from '../constants/cartConstants';
 
 export const cartReducer = (
   state = { cartItems: [], shippingAddress: {} },
-  action
+  action,
 ) => {
   switch (action.type) {
     case CART_ADD_ITEM:
@@ -17,7 +18,7 @@ export const cartReducer = (
         return {
           ...state,
           cartItems: state.cartItems.map((x) =>
-            x.product === existItem.product ? item : x
+            x.product === existItem.product ? item : x,
           ),
         };
       } else {
@@ -40,6 +41,10 @@ export const cartReducer = (
       return {
         ...state,
         paymentMethod: action.payload,
+      };
+    case CART_CLEAR_ITEMS:
+      return {
+        cartItems: [],
       };
     default:
       return state;

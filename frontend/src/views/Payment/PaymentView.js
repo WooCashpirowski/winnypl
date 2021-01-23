@@ -15,7 +15,7 @@ const PaymentView = ({ history }) => {
     }
   }, [history, shippingAddress]);
 
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('PayPal');
 
   const dispatch = useDispatch();
 

@@ -5,6 +5,7 @@ import { PayPalButton } from 'react-paypal-button-v2';
 import OrderStyled from './OrderStyled';
 import { getOrderDetails, payOrder } from '../../redux/actions/orderActions';
 import { ORDER_PAY_RESET } from '../../redux/constants/orderConstants';
+import { CART_CLEAR_ITEMS } from '../../redux/constants/cartConstants';
 import Loader from '../../components/Loader/Loader';
 import Message from '../../components/Message/Message';
 import { Link } from 'react-router-dom';
@@ -33,6 +34,7 @@ const OrderView = ({ match }) => {
 
     if (!order || order._id !== orderId || successPay) {
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: CART_CLEAR_ITEMS });
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
       if (!window.paypal) {
