@@ -10,9 +10,12 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
+  USER_DETAILS_RESET,
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
 } from "../constants/userConstants";
+import { ORDER_USERS_ORDERS_RESET } from "../constants/orderConstants";
+import { CART_CLEAR_ITEMS } from "../constants/cartConstants";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -27,7 +30,7 @@ export const login = (email, password) => async (dispatch) => {
     const { data } = await axios.post(
       "/api/users/login",
       { email, password },
-      config
+      config,
     );
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));
@@ -45,6 +48,9 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: USER_DETAILS_RESET });
+  dispatch({ type: ORDER_USERS_ORDERS_RESET });
+  dispatch({ type: CART_CLEAR_ITEMS });
 };
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -60,7 +66,7 @@ export const register = (name, email, password) => async (dispatch) => {
     const { data } = await axios.post(
       "/api/users",
       { name, email, password },
-      config
+      config,
     );
 
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });

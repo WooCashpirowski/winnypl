@@ -14,8 +14,7 @@ const ProfileStyled = styled.section`
       flex: 1;
       background: var(--bg-color);
       padding: 1rem;
-      max-width: 500px;
-      min-width: 300px;
+      min-width: 500px;
       margin: 0 auto;
       h4 {
         margin-bottom: 1rem;
@@ -104,6 +103,7 @@ const ProfileStyled = styled.section`
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
       padding: 1rem;
       table {
+        width: 100%;
         thead > tr > th,
         tbody > tr > td {
           padding: 0.5rem 0.2rem;
@@ -135,7 +135,6 @@ const ProfileStyled = styled.section`
       flex-direction: column-reverse;
       .my-orders {
         margin: 0 auto 2rem;
-        overflow-x: hidden;
         table {
           .hide {
             display: none;
@@ -143,6 +142,11 @@ const ProfileStyled = styled.section`
         }
       }
     }
+    @media (max-width: 560px) {
+      .form {
+        max-width: 450px;
+        min-width: 300px;
+      }
   }
 `;
 

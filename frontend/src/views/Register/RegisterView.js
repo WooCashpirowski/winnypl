@@ -63,6 +63,7 @@ const RegisterView = ({ history }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoComplete="username"
             ></input>
             <input
               type="password"
@@ -70,6 +71,7 @@ const RegisterView = ({ history }) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoComplete="new-password"
             ></input>
             <input
               type="password"
@@ -77,6 +79,7 @@ const RegisterView = ({ history }) => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
+              autoComplete="new-password"
             ></input>
             <button type="submit" variant="primary">
               <div className="slide" />
