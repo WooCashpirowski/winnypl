@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { PayPalButton } from 'react-paypal-button-v2';
-import OrderStyled from './OrderStyled';
-import { getOrderDetails, payOrder } from '../../redux/actions/orderActions';
-import { ORDER_PAY_RESET } from '../../redux/constants/orderConstants';
-import { CART_CLEAR_ITEMS } from '../../redux/constants/cartConstants';
-import Loader from '../../components/Loader/Loader';
-import Message from '../../components/Message/Message';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { PayPalButton } from "react-paypal-button-v2";
+import OrderStyled from "./OrderStyled";
+import { getOrderDetails, payOrder } from "../../redux/actions/orderActions";
+import { ORDER_PAY_RESET } from "../../redux/constants/orderConstants";
+import { CART_CLEAR_ITEMS } from "../../redux/constants/cartConstants";
+import Loader from "../../components/Loader/Loader";
+import Message from "../../components/Message/Message";
+import { Link } from "react-router-dom";
 
 const OrderView = ({ match }) => {
   const orderId = match.params.id;
@@ -23,9 +23,9 @@ const OrderView = ({ match }) => {
 
   useEffect(() => {
     const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get('/api/config/paypal');
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
+      const { data: clientId } = await axios.get("/api/config/paypal");
+      const script = document.createElement("script");
+      script.type = "text/javascript";
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=PLN`;
       script.async = true;
       script.onload = () => setSdkReady(true);
@@ -52,7 +52,6 @@ const OrderView = ({ match }) => {
   }
 
   const handlePaymentSuccess = (paymentResult) => {
-    console.log(paymentResult);
     dispatch(payOrder(orderId, paymentResult));
   };
 
@@ -72,8 +71,8 @@ const OrderView = ({ match }) => {
                 <p>Imię: {order.user.name}</p>
                 <p>Email: {order.user.email}</p>
                 <p>
-                  Adres: {order.shippingAddress.address},{' '}
-                  {order.shippingAddress.postalCode},{' '}
+                  Adres: {order.shippingAddress.address},{" "}
+                  {order.shippingAddress.postalCode},{" "}
                   {order.shippingAddress.city}, {order.shippingAddress.country},
                 </p>
                 {!order.isDelivered && (

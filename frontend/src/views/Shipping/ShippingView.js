@@ -24,7 +24,7 @@ const ShippingView = ({ history }) => {
   return (
     <ShippingStyled>
       <h2 className="section-header">Dane do dostawy</h2>
-      <CheckoutSteps step1 step2 />
+      <CheckoutSteps step2 />
       <FormContainer>
         <form onSubmit={handleSubmit}>
           <h4>Podaj adres dostawy</h4>

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -9,7 +9,10 @@ import {
   ORDER_PAY_REQUEST,
   ORDER_PAY_SUCCESS,
   ORDER_PAY_FAIL,
-} from '../constants/orderConstants';
+  ORDER_USERS_ORDERS_REQUEST,
+  ORDER_USERS_ORDERS_SUCCESS,
+  ORDER_USERS_ORDERS_FAIL,
+} from "../constants/orderConstants";
 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
@@ -21,7 +24,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -50,7 +53,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -82,7 +85,7 @@ export const payOrder = (orderId, paymentResult) => async (
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -97,6 +100,34 @@ export const payOrder = (orderId, paymentResult) => async (
   } catch (error) {
     dispatch({
       type: ORDER_PAY_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listUsersOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ORDER_USERS_ORDERS_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/orders/myorders`, config);
+
+    dispatch({ type: ORDER_USERS_ORDERS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: ORDER_USERS_ORDERS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

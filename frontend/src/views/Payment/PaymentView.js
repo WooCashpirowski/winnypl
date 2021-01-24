@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Form } from 'react-bootstrap';
-import CheckoutSteps from '../../components/CheckoutSteps/CheckoutSteps';
-import FormContainer from '../../components/FormContainer/FormContainer';
-import PaymentStyled from './PaymentStyled';
-import { savePaymentMethod } from '../../redux/actions/cartActions';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Form } from "react-bootstrap";
+import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
+import FormContainer from "../../components/FormContainer/FormContainer";
+import PaymentStyled from "./PaymentStyled";
+import { savePaymentMethod } from "../../redux/actions/cartActions";
 
 const PaymentView = ({ history }) => {
   const { shippingAddress } = useSelector((state) => state.cart);
 
   useEffect(() => {
     if (shippingAddress.length === 0) {
-      history.push('/dostawa');
+      history.push("/dostawa");
     }
   }, [history, shippingAddress]);
 
-  const [paymentMethod, setPaymentMethod] = useState('PayPal');
+  const [paymentMethod, setPaymentMethod] = useState("PayPal");
 
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
-    history.push('/podsumowanie');
+    history.push("/podsumowanie");
   };
 
   return (
     <PaymentStyled>
       <h2 className="section-header">Płatność</h2>
-      <CheckoutSteps step1 step2 step3 />
+      <CheckoutSteps step2 step3 />
       <FormContainer>
         <form onSubmit={handleSubmit}>
           <h4>Wybierz metodę płatności</h4>

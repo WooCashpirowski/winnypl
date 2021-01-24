@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Table } from "react-bootstrap";
 import ProfileStyled from "./ProfileStyled";
 import {
   getUserDetails,
   updateUserProfile,
 } from "../../redux/actions/userActions";
 import { USER_UPDATE_RESET } from "../../redux/constants/userConstants";
+import { listUsersOrders } from "../../redux/actions/orderActions";
 import Message from "../../components/Message/Message";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
+import { FcCheckmark } from "react-icons/fc";
+import { FcCancel } from "react-icons/fc";
 
 const ProfileView = ({ history }) => {
   const [name, setName] = useState("");
@@ -21,6 +25,9 @@ const ProfileView = ({ history }) => {
   const { loading, error, user } = useSelector((state) => state.userDetails);
   const { userInfo } = useSelector((state) => state.userLogin);
   const { success } = useSelector((state) => state.userUpdate);
+  const { loading: loadingOrders, error: errorOrders, orders } = useSelector(
+    (state) => state.orderUsersOrders,
+  );
 
   useEffect(() => {
     if (!userInfo) {
@@ -29,6 +36,7 @@ const ProfileView = ({ history }) => {
       if (!user || !user.name || success) {
         dispatch({ type: USER_UPDATE_RESET });
         dispatch(getUserDetails("profile"));
+        dispatch(listUsersOrders());
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -56,7 +64,7 @@ const ProfileView = ({ history }) => {
         </Message>
       )}
       {message && <Message>{message}</Message>}
-      {loading ? (
+      {loading && loadingOrders ? (
         <Loader />
       ) : (
         <>
@@ -80,6 +88,7 @@ const ProfileView = ({ history }) => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="username"
                   ></input>
                 </label>
                 <label>
@@ -88,6 +97,7 @@ const ProfileView = ({ history }) => {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="new-password"
                   ></input>
                 </label>
                 <label>
@@ -96,6 +106,7 @@ const ProfileView = ({ history }) => {
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    autoComplete="new-password"
                   ></input>
                 </label>
                 <button
@@ -110,6 +121,45 @@ const ProfileView = ({ history }) => {
             </div>
             <div className="my-orders">
               <h3>Moje zamówienia</h3>
+              {errorOrders ? (
+                <p className="danger">{errorOrders}</p>
+              ) : loadingOrders ? (
+                <Loader />
+              ) : (
+                <Table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th className="hide">ID</th>
+                      <th>Data</th>
+                      <th>Wartość</th>
+                      <th>Opłacone</th>
+                      <th>Dostarczone</th>
+                      <th>Szczegóły</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders &&
+                      orders.map((order) => (
+                        <tr key={order._id}>
+                          <td>{orders.indexOf(order) + 1}.</td>
+                          <td className="hide">{order._id}</td>
+                          <td>{order.createdAt.split("T")[0]}</td>
+                          <td>{order.totalPrice} zł</td>
+                          <td>
+                            {order.isPaid ? <FcCheckmark /> : <FcCancel />}
+                          </td>
+                          <td>
+                            {order.isDelivered ? <FcCheckmark /> : <FcCancel />}
+                          </td>
+                          <td>
+                            <Link to={`/zamowienie/${order._id}`}>Pokaż</Link>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </Table>
+              )}
             </div>
           </div>
         </>

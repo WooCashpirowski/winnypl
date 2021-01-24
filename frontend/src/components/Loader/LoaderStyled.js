@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const LoaderStyled = styled.div`
   position: absolute;
@@ -10,7 +10,7 @@ const LoaderStyled = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: var(--bg-color);
+  /* background: var(--bg-color); */
   .loader {
     height: 150px;
     width: 150px;

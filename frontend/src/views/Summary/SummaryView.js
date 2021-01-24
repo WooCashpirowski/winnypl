@@ -36,14 +36,14 @@ const SummaryView = ({ history }) => {
         itemsPrice: cart.totalItems,
         shippingPrice: cart.shipping,
         totalPrice: cart.total,
-      })
+      }),
     );
   };
 
   return (
     <SummaryStyled>
       <h2 className="section-header">Podsumowanie</h2>
-      <CheckoutSteps step1 step2 step3 step4 />
+      <CheckoutSteps step2 step3 step4 />
       <div className="order-wrapper">
         <div className="order-blocks">
           <div className="order-block">

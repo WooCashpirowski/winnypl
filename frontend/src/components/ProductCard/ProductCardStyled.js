@@ -59,9 +59,8 @@ const ProductCardStyled = styled.div`
     }
   }
   &:hover {
-    background: #ebeced;
     img {
-      transform: scale(1.2) translateY(-30px);
+      transform: scale(1.2) translateY(-20px);
     }
   }
 `;

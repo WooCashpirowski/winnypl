@@ -4,11 +4,19 @@ const ProfileStyled = styled.section`
   min-height: calc(100vh - 100px);
   .my-account-wrapper {
     display: flex;
+    align-items: flex-start;
     h3 {
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px dashed var(--dark-red);
     }
     .form {
       flex: 1;
+      background: var(--bg-color);
+      padding: 1rem;
+      max-width: 500px;
+      min-width: 300px;
+      margin: 0 auto;
       h4 {
         margin-bottom: 1rem;
         color: green;
@@ -53,7 +61,6 @@ const ProfileStyled = styled.section`
           border: none;
           padding: 0.4rem;
           margin-top: 0.5rem;
-          /* background: var(--light-pink); */
           border: 2px solid var(--dark-red);
           font-size: 16px;
           color: var(--dark-secondary);
@@ -94,6 +101,47 @@ const ProfileStyled = styled.section`
     .my-orders {
       flex: 2;
       margin-left: 2rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+      padding: 1rem;
+      table {
+        thead > tr > th,
+        tbody > tr > td {
+          padding: 0.5rem 0.2rem;
+        }
+        thead {
+          font-size: 14px;
+          background: var(--bg-color);
+          tr {
+            th {
+              font-weight: 500;
+              text-align: left;
+            }
+          }
+        }
+        tbody {
+          font-size: 12px;
+          tr {
+            td {
+              padding: 1.5rem 0.5rem 1.5rem 0;
+              svg {
+                font-size: 16px;
+              }
+            }
+          }
+        }
+      }
+    }
+    @media (max-width: 910px) {
+      flex-direction: column-reverse;
+      .my-orders {
+        margin: 0 auto 2rem;
+        overflow-x: hidden;
+        table {
+          .hide {
+            display: none;
+          }
+        }
+      }
     }
   }
 `;
