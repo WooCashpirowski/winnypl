@@ -105,6 +105,7 @@ const CartView = ({ match, location, history }) => {
                   <div className="slide" />
                   <span>Dokończ zakupy</span>
                 </button>
+                <Link to="/">Przeglądaj dalej</Link>
               </div>
             </div>
           </>

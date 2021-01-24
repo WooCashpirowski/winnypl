@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const CartStyled = styled.div`
   min-height: calc(100vh - 100px);
@@ -61,7 +61,7 @@ const CartStyled = styled.div`
       width: 100%;
       border: none;
       padding: 0.5rem;
-      margin-top: 0.5rem;
+      margin: 0.5rem 0;
       background: var(--dark-red);
       color: white;
       font-size: 16px;

@@ -1,6 +1,6 @@
-import React from "react";
-import LoaderStyled from "./LoaderStyled";
-import loader1 from "../../assets/img/loader-1.gif";
+import React from 'react';
+import LoaderStyled from './LoaderStyled';
+import loader1 from '../../assets/img/loader-1.gif';
 
 const Loader = () => {
   return (
@@ -8,7 +8,7 @@ const Loader = () => {
       <div className="loader">
         <img src={loader1} alt="loader" />
       </div>
-      <h2>loading ...</h2>
+      <h3>loading ...</h3>
     </LoaderStyled>
   );
 };
