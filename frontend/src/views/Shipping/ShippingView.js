@@ -8,10 +8,12 @@ import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
 const ShippingView = ({ history }) => {
   const { shippingAddress: shipping } = useSelector((state) => state.cart);
 
-  const [address, setAddress] = useState(shipping.address || "");
-  const [city, setCity] = useState(shipping.city || "");
-  const [postalCode, setPostalCode] = useState(shipping.postalCode || "");
-  const [country, setCountry] = useState(shipping.country || "");
+  const [address, setAddress] = useState(shipping ? shipping.address : "");
+  const [city, setCity] = useState(shipping ? shipping.city : "");
+  const [postalCode, setPostalCode] = useState(
+    shipping ? shipping.postalCode : ""
+  );
+  const [country, setCountry] = useState(shipping ? shipping.country : "");
 
   const dispatch = useDispatch();
 
