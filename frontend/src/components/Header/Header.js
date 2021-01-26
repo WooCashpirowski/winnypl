@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import logo from '../../assets/img/logo.svg';
-import { HeaderStyled } from './HeaderStyled';
-import { ImCart, ImUser } from 'react-icons/im';
-import { HiOutlineMenuAlt3 } from 'react-icons/hi';
-import { IoMdClose } from 'react-icons/io';
-import { FiLogOut } from 'react-icons/fi';
-import { logout } from '../../redux/actions/userActions';
+import React, { useState, useEffect } from "react";
+import { NavLink, withRouter } from "react-router-dom";
+import { Dropdown, DropdownButton } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import logo from "../../assets/img/logo.svg";
+import { HeaderStyled } from "./HeaderStyled";
+import { ImCart, ImUser } from "react-icons/im";
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { IoMdClose } from "react-icons/io";
+import { FiLogOut } from "react-icons/fi";
+import { logout } from "../../redux/actions/userActions";
 
 const Header = ({ history }) => {
   const [showNav, setShowNav] = useState(false);
@@ -22,35 +23,51 @@ const Header = ({ history }) => {
     function handleScroll() {
       setLastYPos(window.pageYOffset);
     }
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [lastYPos]);
 
   const handleLogout = () => {
     dispatch(logout());
     closeNav();
-    history.push('/');
+    history.push("/");
   };
 
   return (
     <HeaderStyled>
       <button
         type="button"
-        className={lastYPos > 100 ? 'toggler small' : 'toggler'}
+        className={lastYPos > 100 ? "toggler small" : "toggler"}
         onClick={toggleNav}
       >
         {showNav ? <IoMdClose /> : <HiOutlineMenuAlt3 />}
       </button>
       {userInfo && (
         <p className="profile-info">
-          Witaj, <NavLink to="/moje-konto">{userInfo.name}</NavLink>
+          Witaj,{" "}
+          {!userInfo.isAdmin ? (
+            <NavLink to="/moje-konto">{userInfo.name}</NavLink>
+          ) : (
+            <>
+              <DropdownButton
+                menuAlign="right"
+                title={`${userInfo.name}`}
+                id="dropdown-menu-align-right"
+              >
+                <NavLink to="/moje-konto">Moje konto</NavLink>
+                <NavLink to="/admin/uzytkownicy">Użytkownicy</NavLink>
+                <NavLink to="/admin/produkty">Produkty</NavLink>
+                <NavLink to="/admin/zamowienia">Zamówienia</NavLink>
+              </DropdownButton>
+            </>
+          )}
         </p>
       )}
-      <nav className={lastYPos > 100 ? 'small' : ''}>
+      <nav className={lastYPos > 100 ? "small" : ""}>
         <NavLink onClick={closeNav} className="logo" to="/">
           <img src={logo} alt="winny.pl" />
         </NavLink>
-        <div className={showNav ? 'navbar active' : 'navbar'}>
+        <div className={showNav ? "navbar active" : "navbar"}>
           <div className="nav-links">
             <NavLink onClick={closeNav} className="nav-link" to="/katalog">
               KATALOG

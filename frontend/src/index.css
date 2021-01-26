@@ -49,7 +49,7 @@ main {
 
 .section-header {
   font-weight: 400;
-  border-bottom: 2px solid var(--dark-red-secondary);
+  border-bottom: 1px solid var(--dark-red-secondary);
   padding: 1rem 0;
   margin-bottom: 1rem;
 }

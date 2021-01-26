@@ -12,8 +12,39 @@ export const HeaderStyled = styled.header`
     transform: translateX(-50%);
     font-size: 14px;
     font-weight: lighter;
+    text-align: center;
     a {
       color: white;
+      font-weight: 300;
+    }
+    .dropdown {
+      display: inline-block;
+      button {
+        font-weight: 300;
+        color: white;
+        border: none;
+        background: none;
+        cursor: pointer;
+      }
+      .dropdown-menu {
+        text-align: left;
+        background: white;
+        border-radius: 3px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-bottom: none;
+        transform: translate(-17px, 25px) !important;
+        a {
+          display: block;
+          color: var(--dark);
+          padding: 0.2rem 1rem;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+          transition: all 0.2s ease;
+          &:hover {
+            background: var(--red);
+            color: white;
+          }
+        }
+      }
     }
   }
   nav {

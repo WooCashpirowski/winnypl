@@ -16,6 +16,7 @@ import {
   USER_LIST_USERS_REQUEST,
   USER_LIST_USERS_SUCCESS,
   USER_LIST_USERS_FAIL,
+  USER_LIST_USERS_RESET,
 } from "../constants/userConstants";
 import { ORDER_USERS_ORDERS_RESET } from "../constants/orderConstants";
 import { CART_CLEAR_ITEMS } from "../constants/cartConstants";
@@ -54,6 +55,7 @@ export const logout = () => async (dispatch) => {
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: ORDER_USERS_ORDERS_RESET });
   dispatch({ type: CART_CLEAR_ITEMS });
+  dispatch({ type: USER_LIST_USERS_RESET });
 };
 
 export const register = (name, email, password) => async (dispatch) => {

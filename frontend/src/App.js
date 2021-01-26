@@ -11,12 +11,16 @@ import ShippingView from "./views/Shipping/ShippingView";
 import PaymentView from "./views/Payment/PaymentView";
 import SummaryView from "./views/Summary/SummaryView";
 import OrderView from "./views/Order/OrderView";
+import UsersListView from "./views/UsersList/UsersListView";
+import UserDetailsView from "./views/UserDetails/UserDetailsView";
 
 function App() {
   return (
     <Router>
       <Header />
       <main>
+        <Route path="/admin/uzytkownicy/:id" component={UserDetailsView} />
+        <Route path="/admin/uzytkownicy" component={UsersListView} exact />
         <Route path="/zamowienie/:id" component={OrderView} />
         <Route path="/podsumowanie" component={SummaryView} />
         <Route path="/platnosc" component={PaymentView} />

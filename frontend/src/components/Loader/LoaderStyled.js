@@ -12,15 +12,15 @@ const LoaderStyled = styled.div`
   align-items: center;
   /* background: var(--bg-color); */
   .loader {
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     img {
-      height: 152px;
+      height: 102px;
     }
   }
 `;

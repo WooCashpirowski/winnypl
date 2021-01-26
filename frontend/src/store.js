@@ -28,11 +28,11 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdate: userUpdateReducer,
+  userList: userListReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderUsersOrders: orderUsersOrdersReducer,
-  userList: userListReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
