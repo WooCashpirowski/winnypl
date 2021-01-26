@@ -50,10 +50,20 @@ const Users = styled.section`
               transform: scale(1.02);
               color: var(--dark-red);
             }
+            &:disabled {
+              display: none;
+            }
           }
         }
       }
     }
+  }
+  p.info {
+    text-align: center;
+    color: green;
+    background: lightgreen;
+    padding: 0.2rem 0;
+    font-size: 12px;
   }
 `;
 

@@ -43,7 +43,7 @@ const Header = ({ history }) => {
         {showNav ? <IoMdClose /> : <HiOutlineMenuAlt3 />}
       </button>
       {userInfo && (
-        <p className="profile-info">
+        <div className="profile-info">
           Witaj,{" "}
           {!userInfo.isAdmin ? (
             <NavLink to="/moje-konto">{userInfo.name}</NavLink>
@@ -61,7 +61,7 @@ const Header = ({ history }) => {
               </DropdownButton>
             </>
           )}
-        </p>
+        </div>
       )}
       <nav className={lastYPos > 100 ? "small" : ""}>
         <NavLink onClick={closeNav} className="logo" to="/">

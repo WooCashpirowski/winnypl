@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Users from "./UsersListStyled";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -6,14 +6,16 @@ import { FcCheckmark } from "react-icons/fc";
 import { FcCancel } from "react-icons/fc";
 import { FiEdit } from "react-icons/fi";
 import { IoPersonRemoveOutline } from "react-icons/io5";
-import { listUsers } from "../../redux/actions/userActions";
+import { listUsers, deleteUser } from "../../redux/actions/userActions";
 import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
 
 const UsersListView = ({ history }) => {
   const dispatch = useDispatch();
   const { users, loading, error } = useSelector((state) => state.userList);
+  const { success: successDel } = useSelector((state) => state.userDelete);
   const { userInfo } = useSelector((state) => state.userLogin);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
@@ -21,9 +23,17 @@ const UsersListView = ({ history }) => {
     } else {
       history.push("/zaloguj");
     }
-  }, [dispatch, history, userInfo]);
+    if (successDel) {
+      setMessage("Użytkownik usunięty");
+      setTimeout(() => setMessage(""), 3000);
+    }
+  }, [dispatch, history, userInfo, successDel]);
 
-  const handleDeleteUser = (id) => console.log(`user ${id} deleted`);
+  const handleDeleteUser = (id) => {
+    if (window.confirm("Potwierdź usunięcie użytkownika")) {
+      dispatch(deleteUser(id));
+    }
+  };
 
   return (
     <>
@@ -61,6 +71,7 @@ const UsersListView = ({ history }) => {
                       <button
                         type="button"
                         onClick={() => handleDeleteUser(user._id)}
+                        disabled={userInfo._id === user._id}
                       >
                         <IoPersonRemoveOutline />
                       </button>
@@ -69,6 +80,7 @@ const UsersListView = ({ history }) => {
                 ))}
               </tbody>
             </table>
+            <p className={successDel && message ? "info" : ""}>{message}</p>
           </div>
         </Users>
       )}
