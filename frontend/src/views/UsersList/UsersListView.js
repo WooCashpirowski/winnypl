@@ -25,7 +25,7 @@ const UsersListView = ({ history }) => {
     }
     if (successDel) {
       setMessage("Użytkownik usunięty");
-      setTimeout(() => setMessage(""), 3000);
+      setTimeout(() => setMessage(""), 2000);
     }
   }, [dispatch, history, userInfo, successDel]);
 
