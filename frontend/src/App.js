@@ -19,7 +19,10 @@ function App() {
     <Router>
       <Header />
       <main>
-        <Route path="/admin/uzytkownicy/:id" component={UserDetailsView} />
+        <Route
+          path="/admin/uzytkownicy/:id/edycja"
+          component={UserDetailsView}
+        />
         <Route path="/admin/uzytkownicy" component={UsersListView} exact />
         <Route path="/zamowienie/:id" component={OrderView} />
         <Route path="/podsumowanie" component={SummaryView} />

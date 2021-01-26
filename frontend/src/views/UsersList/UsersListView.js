@@ -65,7 +65,7 @@ const UsersListView = ({ history }) => {
                     </td>
                     <td>{user.isAdmin ? <FcCheckmark /> : <FcCancel />}</td>
                     <td>
-                      <Link to={`/uzytkownicy/${user._id}`}>
+                      <Link to={`/uzytkownicy/${user._id}/edycja`}>
                         <FiEdit />
                       </Link>
                       <button
