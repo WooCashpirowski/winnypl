@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { DropdownButton } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import logo from "../../assets/img/logo.svg";
 import { HeaderStyled } from "./HeaderStyled";
