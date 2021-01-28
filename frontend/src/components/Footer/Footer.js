@@ -4,6 +4,7 @@ const style = {
   textAlign: "center",
   borderTop: "1px solid var(--dark-red)",
   padding: "0.7rem",
+  fontSize: "12px",
 };
 
 const Footer = () => {

@@ -13,6 +13,7 @@ import SummaryView from "./views/Summary/SummaryView";
 import OrderView from "./views/Order/OrderView";
 import UsersListView from "./views/UsersList/UsersListView";
 import UserDetailsView from "./views/UserDetails/UserDetailsView";
+import ProductsListView from "./views/ProductsList/ProductsListView";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           path="/admin/uzytkownicy/:id/edycja"
           component={UserDetailsView}
         />
+        <Route path="/admin/produkty" component={ProductsListView} exact />
         <Route path="/admin/uzytkownicy" component={UsersListView} exact />
         <Route path="/zamowienie/:id" component={OrderView} />
         <Route path="/podsumowanie" component={SummaryView} />
