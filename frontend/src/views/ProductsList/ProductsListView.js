@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
-import { IoPersonRemoveOutline } from "react-icons/io5";
+import { FcCancel } from "react-icons/fc";
 import { IoMdAdd } from "react-icons/io";
 import {
   listProducts,
@@ -93,7 +93,7 @@ const UsersListView = ({ match, history }) => {
                       {product.countInStock ? (
                         `${product.countInStock} szt.`
                       ) : (
-                        <IoPersonRemoveOutline />
+                        <FcCancel />
                       )}
                     </td>
 
@@ -113,6 +113,7 @@ const UsersListView = ({ match, history }) => {
               </tbody>
             </table>
             <p className={message ? "info" : ""}>{message}</p>
+            <p className={errorDel ? "warning" : ""}>{errorDel}</p>
           </div>
         </Products>
       )}

@@ -105,12 +105,19 @@ const Products = styled.section`
       }
     }
   }
-  p.info {
+  p.info,
+  p.warning {
     text-align: center;
-    color: green;
-    background: lightgreen;
     padding: 0.2rem 0;
     font-size: 12px;
+  }
+  p.info {
+    color: green;
+    background: lightgreen;
+  }
+  p.warning {
+    color: red;
+    background: var(--light-pink);
   }
 `;
 

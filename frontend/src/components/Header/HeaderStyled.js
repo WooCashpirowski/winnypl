@@ -58,9 +58,11 @@ export const HeaderStyled = styled.header`
       flex: 2;
       z-index: 1;
       img {
-        width: 250px;
-        margin-top: 2rem;
+        width: 200px;
+        margin-top: 1rem;
         margin-left: 2rem;
+        transition: all 0.2s ease;
+
         @media (max-width: 375px) {
           width: 200px;
         }
@@ -144,9 +146,11 @@ export const HeaderStyled = styled.header`
       border: none;
       cursor: pointer;
       outline: none;
+      transition: all 0.2s ease;
       &.small {
         z-index: 100;
-        top: 2px;
+        /* top: 2px; */
+        transform: translateY(-20px);
       }
     }
     nav {
@@ -154,15 +158,16 @@ export const HeaderStyled = styled.header`
       .navbar {
         flex-direction: column;
         width: 100%;
-        position: absolute;
-        top: 100px;
-        left: -100%;
+        /* position: absolute; */
+        /* top: 100px; */
+        margin-right: -100%;
         opacity: 0;
         transition: all 0.5s ease;
         background: var(--light-pink);
         min-height: 100vh;
         &.active {
-          left: 0;
+          min-height: 100vh;
+          margin-right: 0;
           opacity: 1;
           z-index: 0;
         }
@@ -202,13 +207,20 @@ export const HeaderStyled = styled.header`
       .logo {
         flex: 12;
         img {
-          margin: 2.5rem 0 0;
+          margin: 0.5rem 0 0;
           width: 200px;
         }
       }
       transition: all 0.5s ease;
       &.small {
-        transform: translateY(-50px);
+        /* transform: translateY(-50px); */
+        height: 50px;
+        .logo {
+          img {
+            margin-top: 0.2rem;
+            width: 100px;
+          }
+        }
       }
     }
   }
