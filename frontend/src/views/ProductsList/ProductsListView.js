@@ -9,33 +9,49 @@ import { IoMdAdd } from "react-icons/io";
 import {
   listProducts,
   deleteProduct,
+  createProduct,
 } from "../../redux/actions/productActions";
+import { PRODUCT_CREATE_RESET } from "../../redux/constants/productConstants";
 import Loader from "../../components/Loader/Loader";
-import Message from "../../components/Message/Message";
 
 const UsersListView = ({ match, history }) => {
   const dispatch = useDispatch();
   const { loading, error, products } = useSelector(
-    (state) => state.productList
+    (state) => state.productList,
   );
   const { userInfo } = useSelector((state) => state.userLogin);
-  const { loading: loadingDel, error: errorDel, success } = useSelector(
-    (state) => state.productDelete
-  );
+  const {
+    loading: loadingDel,
+    error: errorDel,
+    success: successDel,
+  } = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: newProduct,
+  } = useSelector((state) => state.productCreate);
 
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts());
-    } else {
+    dispatch({ type: PRODUCT_CREATE_RESET });
+
+    if (!userInfo.isAdmin) {
       history.push("/login");
     }
-    if (success) {
+
+    if (successCreate) {
+      history.push(`/admin/produkty/${newProduct._id}/edycja`);
+    } else {
+      dispatch(listProducts());
+    }
+
+    if (successDel) {
       setMessage("Produkt usunięty");
       setTimeout(() => setMessage(""), 2000);
     }
-  }, [dispatch, history, userInfo, success]);
+  }, [dispatch, history, userInfo, successDel, successCreate, newProduct]);
 
   const handleDeleteProduct = (id) => {
     if (window.confirm("Potwierdź usunięcie produktu")) {
@@ -44,15 +60,13 @@ const UsersListView = ({ match, history }) => {
   };
 
   const handleCreateProduct = () => {
-    console.log("create product");
+    dispatch(createProduct());
   };
 
   return (
     <>
-      {loading || loadingDel ? (
+      {loading || loadingDel || loadingCreate ? (
         <Loader />
-      ) : error ? (
-        <Message>{error}</Message>
       ) : (
         <Products>
           <h2 className="section-header">Produkty</h2>
@@ -114,6 +128,8 @@ const UsersListView = ({ match, history }) => {
             </table>
             <p className={message ? "info" : ""}>{message}</p>
             <p className={errorDel ? "warning" : ""}>{errorDel}</p>
+            <p className={errorCreate ? "warning" : ""}>{errorCreate}</p>
+            <p className={error ? "warning" : ""}>{error}</p>
           </div>
         </Products>
       )}
