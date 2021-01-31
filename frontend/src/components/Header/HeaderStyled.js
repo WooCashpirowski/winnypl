@@ -158,10 +158,10 @@ export const HeaderStyled = styled.header`
       .navbar {
         flex-direction: column;
         width: 100%;
-        margin-left: -100%;
+        margin-left: -200%;
         margin-top: -8px;
         z-index: -1;
-        opacity: 0;
+        opacity: 0.3;
         transition: all 0.5s ease;
         background: linear-gradient(270deg, #260000 0%, #cf3142 100%);
         color: white;
