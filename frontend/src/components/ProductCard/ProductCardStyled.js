@@ -8,22 +8,29 @@ const ProductCardStyled = styled.div`
   position: relative;
   overflow: hidden;
   background: white;
-  img {
-    width: 200px;
-    transition: all 0.5s ease;
-    z-index: -1;
+  .image {
+    height: 70%;
+    overflow: hidden;
+    img {
+      height: 100%;
+      transition: all 0.5s ease;
+      z-index: -1;
+    }
   }
-  h3 {
-    font-weight: 500;
-    font-size: 1rem;
-    z-index: 2;
-  }
-  p {
-    font-size: 0.8rem;
-    z-index: 2;
-    &.price {
+  .info {
+    height: 30%;
+    h3 {
       font-weight: 500;
       font-size: 1rem;
+      z-index: 2;
+    }
+    p {
+      font-size: 0.8rem;
+      z-index: 2;
+      &.price {
+        font-weight: 500;
+        font-size: 1rem;
+      }
     }
   }
   &::before {

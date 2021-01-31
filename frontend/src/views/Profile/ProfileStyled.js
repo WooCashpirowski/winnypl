@@ -14,7 +14,6 @@ const ProfileStyled = styled.section`
       flex: 1;
       background: var(--bg-color);
       padding: 1rem;
-      min-width: 500px;
       margin: 0 auto;
       h4 {
         margin-bottom: 1rem;
@@ -98,7 +97,7 @@ const ProfileStyled = styled.section`
       }
     }
     .my-orders {
-      flex: 2;
+      flex: 3;
       margin-left: 2rem;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
       padding: 1rem;
@@ -133,7 +132,13 @@ const ProfileStyled = styled.section`
     }
     @media (max-width: 910px) {
       flex-direction: column-reverse;
+      .form {
+        width: 100%;
+        z-index: 0;
+      }
       .my-orders {
+        flex: 1;
+        width: 100%;
         margin: 0 auto 2rem;
         table {
           .hide {
@@ -142,11 +147,6 @@ const ProfileStyled = styled.section`
         }
       }
     }
-    @media (max-width: 560px) {
-      .form {
-        max-width: 450px;
-        min-width: 300px;
-      }
   }
 `;
 

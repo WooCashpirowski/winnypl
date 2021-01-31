@@ -158,18 +158,19 @@ export const HeaderStyled = styled.header`
       .navbar {
         flex-direction: column;
         width: 100%;
-        /* position: absolute; */
-        /* top: 100px; */
-        margin-right: -100%;
+        margin-left: -100%;
+        margin-top: -8px;
+        z-index: -1;
         opacity: 0;
         transition: all 0.5s ease;
-        background: var(--light-pink);
+        background: linear-gradient(270deg, #260000 0%, #cf3142 100%);
+        color: white;
         min-height: 100vh;
         &.active {
           min-height: 100vh;
-          margin-right: 0;
+          margin-left: 0;
           opacity: 1;
-          z-index: 0;
+          z-index: 1;
         }
         .nav-links {
           flex-direction: column;
@@ -180,7 +181,7 @@ export const HeaderStyled = styled.header`
           .nav-link {
             margin-left: 0;
             padding: 1rem;
-            color: var(--dark);
+            color: var(--light-pink);
           }
         }
         .user-nav {

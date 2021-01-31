@@ -8,17 +8,24 @@ const ProductCard = ({ product }) => {
   return (
     <Link to={`/produkt/${product._id}`}>
       <ProductCardStyled>
-        <img src={product.image} alt={product.name} />
-        <h3>{product.name}</h3>
-        <p>
-          {product.category} {product.subcategory}
-        </p>
-        <p className="price">{product.price} zł</p>
-        <div className="add-to-cart">
-          <ImCart />
+        <div className="image">
+          <img src={product.image} alt={product.name} />
         </div>
-        <div className="rating">
-          <Rating value={product.rating} text={`${product.numReviews} ocen`} />
+        <div className="info">
+          <h3>{product.name}</h3>
+          <p>
+            {product.category} {product.subcategory}
+          </p>
+          <p className="price">{product.price} zł</p>
+          <div className="add-to-cart">
+            <ImCart />
+          </div>
+          <div className="rating">
+            <Rating
+              value={product.rating}
+              text={`${product.numReviews} ocen`}
+            />
+          </div>
         </div>
       </ProductCardStyled>
     </Link>
