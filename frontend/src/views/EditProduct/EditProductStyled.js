@@ -88,6 +88,10 @@ const EditProductStyled = styled.section`
         }
       }
     }
+    p.warning {
+    color: red;
+    background: var(--light-pink);
+  }
   }
 `;
 

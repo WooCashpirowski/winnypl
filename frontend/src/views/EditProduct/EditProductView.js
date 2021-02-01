@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import EditProductStyled from "./EditProductStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { listProductDetails } from "../../redux/actions/productActions";
+import { listProductDetails, updateProduct } from "../../redux/actions/productActions";
 import Loader from "../../components/Loader/Loader";
 import { Link } from "react-router-dom";
+import { PRODUCT_UPDATE_RESET } from "../../redux/constants/productConstants";
 
 const EditProductView = ({ match, history }) => {
   const productId = match.params.id;
@@ -22,6 +23,9 @@ const EditProductView = ({ match, history }) => {
   const { product, loading, error } = useSelector(
     (state) => state.productDetails,
   );
+  const { success: successUpdate, loading: loadingUpdate, error: errorUpdate } = useSelector(
+    (state) => state.productUpdate,
+  );
 
   const { userInfo } = useSelector((state) => state.userLogin);
 
@@ -29,30 +33,45 @@ const EditProductView = ({ match, history }) => {
     if (!userInfo.isAdmin) {
       history.push("/login");
     }
-
-    if (!product || productId !== product._id) {
-      dispatch(listProductDetails(productId));
+    if(successUpdate) {
+      dispatch({type: PRODUCT_UPDATE_RESET})
+      history.push("/admin/produkty")
     } else {
-      setName(product.name);
-      setBrand(product.brand);
-      setCategory(product.category);
-      setDescription(product.description);
-      setFeatured(product.featured);
-      setImage(product.image);
-      setPrice(product.price);
-      setCountInStock(product.countInStock);
-      setSubcategory(product.subcategory);
+      if (!product || productId !== product._id) {
+        dispatch(listProductDetails(productId));
+      } else {
+        setName(product.name);
+        setBrand(product.brand);
+        setCategory(product.category);
+        setDescription(product.description);
+        setFeatured(product.featured);
+        setImage(product.image);
+        setPrice(product.price);
+        setCountInStock(product.countInStock);
+        setSubcategory(product.subcategory);
+      }
     }
-  }, [history, dispatch, product, productId, userInfo]);
-  console.log(product);
+  }, [history, dispatch, product, productId, userInfo, successUpdate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(updateProduct({
+      _id: productId,
+      name,
+      price,
+      brand,
+      category,
+      subcategory,
+      countInStock,
+      description,
+      image,
+      featured,
+    }))
   };
 
   return (
     <>
-      {loading ? (
+      {loading || loadingUpdate ? (
         <Loader />
       ) : (
         <EditProductStyled>
@@ -100,6 +119,7 @@ const EditProductView = ({ match, history }) => {
                 <p>Cena</p>
                 <input
                   type="number"
+                  step="0.01"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   min="0"
@@ -147,6 +167,8 @@ const EditProductView = ({ match, history }) => {
                 <span>Zapisz</span>
               </button>
             </form>
+            {error && <p className="warning">{error}</p> }
+            {errorUpdate && <p className="warning">{errorUpdate}</p> }
           </div>
         </EditProductStyled>
       )}
