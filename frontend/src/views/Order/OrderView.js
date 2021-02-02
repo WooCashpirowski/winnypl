@@ -3,8 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { PayPalButton } from "react-paypal-button-v2";
 import OrderStyled from "./OrderStyled";
-import { getOrderDetails, payOrder } from "../../redux/actions/orderActions";
-import { ORDER_PAY_RESET } from "../../redux/constants/orderConstants";
+import {
+  getOrderDetails,
+  payOrder,
+  deliverOrder,
+} from "../../redux/actions/orderActions";
+import {
+  ORDER_DELIVER_RESET,
+  ORDER_PAY_RESET,
+} from "../../redux/constants/orderConstants";
 import { CART_CLEAR_ITEMS } from "../../redux/constants/cartConstants";
 import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
@@ -20,6 +27,9 @@ const OrderView = ({ match, history }) => {
   const { loading: loadingPay, success: successPay } = useSelector(
     (state) => state.orderPay
   );
+  const { loading: loadingDeliver, success: successDeliver } = useSelector(
+    (state) => state.orderDeliver
+  );
   const { userInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
@@ -33,9 +43,10 @@ const OrderView = ({ match, history }) => {
       document.body.appendChild(script);
     };
 
-    if (!order || order._id !== orderId || successPay) {
+    if (!order || order._id !== orderId || successPay || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: CART_CLEAR_ITEMS });
+      dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -46,11 +57,11 @@ const OrderView = ({ match, history }) => {
     }
 
     if (order) {
-      if (!userInfo.isAdmin && userInfo._id !== order.user._id) {
+      if (!userInfo && !userInfo.isAdmin && userInfo._id !== order.user._id) {
         history.push("/");
       }
     }
-  }, [dispatch, order, orderId, successPay, history, userInfo]);
+  }, [dispatch, order, orderId, successPay, history, userInfo, successDeliver]);
 
   if (!loading) {
     order.itemsPrice = order.orderItems
@@ -62,15 +73,19 @@ const OrderView = ({ match, history }) => {
     dispatch(payOrder(orderId, paymentResult));
   };
 
+  const handleDeliverOrder = () => {
+    dispatch(deliverOrder(order));
+  };
+
   return (
     <OrderStyled>
-      {loading ? (
+      {loading || loadingDeliver ? (
         <Loader />
       ) : error ? (
         <Message>{error}</Message>
       ) : (
         <>
-          <h1 className="section-header">Twoje zamówienie</h1>
+          <h1 className="section-header">Zamówienie nr {orderId}</h1>
           <div className="order-wrapper">
             <div className="order-blocks">
               <div className="order-block">
@@ -82,8 +97,10 @@ const OrderView = ({ match, history }) => {
                   {order.shippingAddress.postalCode},{" "}
                   {order.shippingAddress.city}, {order.shippingAddress.country}
                 </p>
-                {!order.isDelivered && (
+                {!order.isDelivered ? (
                   <p className="warning">Nie dostarczono</p>
+                ) : (
+                  <p className="success">Zamówienie dostarczone</p>
                 )}
               </div>
               <div className="order-block">
@@ -141,6 +158,12 @@ const OrderView = ({ match, history }) => {
                     />
                   )}
                 </div>
+              )}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <button type="button" onClick={handleDeliverOrder}>
+                  <div className="slide" />
+                  <span> Oznacz jako dostarczone</span>
+                </button>
               )}
             </div>
           </div>

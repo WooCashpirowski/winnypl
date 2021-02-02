@@ -65,6 +65,42 @@ const OrderStyled = styled.section`
         padding: 1rem 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.15);
       }
+      button {
+        border: none;
+        padding: 0.2rem;
+        margin-top: 1rem;
+        border: 1px solid var(--dark-red);
+        font-size: 12px;
+        color: var(--dark-secondary);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        background: none;
+        .slide {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          transform: translateY(-100%);
+          background: var(--dark-red);
+          transition: all 0.2s ease-Out;
+        }
+        span {
+          position: relative;
+          transition: all 0.3s ease-Out;
+        }
+        &:hover,
+        &:focus {
+          outline: none;
+          .slide {
+            transform: translateY(0);
+          }
+          span {
+            color: white;
+          }
+        }
+      }
     }
     @media (max-width: 768px) {
       flex-direction: column;

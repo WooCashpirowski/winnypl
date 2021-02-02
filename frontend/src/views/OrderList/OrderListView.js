@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Orders from "./OrderListStyled";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -12,7 +12,6 @@ const OrderListView = ({ history }) => {
   const dispatch = useDispatch();
   const { orders, loading, error } = useSelector((state) => state.orderList);
   const { userInfo } = useSelector((state) => state.userLogin);
-  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
