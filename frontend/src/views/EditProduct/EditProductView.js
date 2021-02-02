@@ -108,6 +108,7 @@ const EditProductView = ({ match, history }) => {
           <h2 className="section-header">Edytuj produkt</h2>
           <Link to="/admin/produkty">Wróć</Link>
           <div className="form">
+            <h4>Produkt {productId}</h4>
             <form onSubmit={handleSubmit}>
               <label>
                 <p>Nazwa</p>
@@ -191,8 +192,8 @@ const EditProductView = ({ match, history }) => {
                   ></input>
                 </div>
               </label>
-              <label>
-                <p>Wyróżnione</p>
+              <label className="check">
+                Wyróżnione
                 <input
                   type="checkbox"
                   value={featured}

@@ -5,7 +5,6 @@ import { getUserDetails, updateUser } from "../../redux/actions/userActions";
 import { USER_UPDATE_USER_RESET } from "../../redux/constants/userConstants";
 import UserStyled from "./UserStyled";
 import Loader from "../../components/Loader/Loader";
-import FormContainer from "../../components/FormContainer/FormContainer";
 
 const UserDetailsView = ({ match, history }) => {
   const userId = match.params.id;
@@ -44,30 +43,34 @@ const UserDetailsView = ({ match, history }) => {
 
   return (
     <>
-      <UserStyled>
-        <Link to="/admin/uzytkownicy">Wróć </Link>
-        {error ||
-          (errorUpdate && <p className="warning">{error || errorUpdate}</p>)}
-        {loading || loadingUpdate ? (
-          <Loader />
-        ) : (
-          <FormContainer>
-            <h1 className="section-header">Edycja danych</h1>
+      {loading || loadingUpdate ? (
+        <Loader />
+      ) : (
+        <UserStyled>
+          <h2 className="section-header">Edycja użytkownika</h2>
+          <Link to="/admin/uzytkownicy">Wróć </Link>
+          <div className="form">
+            <h4>Użytkownik {userId}</h4>
             <form onSubmit={handleUpdate}>
-              <input
-                type="text"
-                placeholder="nazwa użytkownika"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></input>
-              <input
-                type="email"
-                placeholder="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete="username"
-              ></input>
               <label>
+                <p>Nazwa</p>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="nazwa użytkownika"
+                ></input>
+              </label>
+              <label>
+                <p>Nazwa</p>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="adres email"
+                ></input>
+              </label>
+              <label className="check">
                 Administrator{" "}
                 <input
                   name="isAdmin"
@@ -81,9 +84,11 @@ const UserDetailsView = ({ match, history }) => {
                 <span>Aktualizuj</span>
               </button>
             </form>
-          </FormContainer>
-        )}
-      </UserStyled>
+            {error && <p className="warning">{error}</p>}
+            {errorUpdate && <p className="warning">{errorUpdate}</p>}
+          </div>
+        </UserStyled>
+      )}
     </>
   );
 };

@@ -13,6 +13,7 @@ export const HeaderStyled = styled.header`
     font-size: 14px;
     font-weight: lighter;
     text-align: center;
+    z-index: 101;
     a {
       color: white;
       font-weight: 300;
@@ -57,21 +58,19 @@ export const HeaderStyled = styled.header`
     .logo {
       flex: 2;
       z-index: 1;
+      margin-top: 1rem;
+      margin-left: 2rem;
       img {
         width: 200px;
-        margin-top: 1rem;
-        margin-left: 2rem;
         transition: all 0.2s ease;
-
-        @media (max-width: 375px) {
-          width: 200px;
-        }
       }
     }
     .navbar {
       flex: 10;
       display: flex;
       height: 100%;
+      z-index: 100 !important;
+
       .nav-links {
         flex: 7;
         display: flex;
@@ -129,11 +128,12 @@ export const HeaderStyled = styled.header`
   }
   @media (max-width: 768px) {
     position: relative;
-    z-index: 3;
+    z-index: 100 !important;
     position: fixed;
     width: 100%;
     .profile-info {
-      display: none;
+      left: 5px;
+      transform: translateX(0);
     }
     .toggler {
       display: block;
@@ -207,20 +207,30 @@ export const HeaderStyled = styled.header`
       }
       .logo {
         flex: 12;
+        margin: 0.5rem 0 0;
         img {
-          margin: 0.5rem 0 0;
           width: 200px;
         }
       }
       transition: all 0.5s ease;
       &.small {
-        /* transform: translateY(-50px); */
         height: 50px;
         .logo {
+          margin-top: 0.2rem;
           img {
-            margin-top: 0.2rem;
             width: 100px;
           }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 375px) {
+    nav {
+      .logo {
+        margin-top: 1.5rem;
+        img {
+          width: 150px;
         }
       }
     }

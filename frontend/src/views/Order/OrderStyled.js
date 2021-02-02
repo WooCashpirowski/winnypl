@@ -66,6 +66,15 @@ const OrderStyled = styled.section`
         border-bottom: 1px solid rgba(0, 0, 0, 0.15);
       }
     }
+    @media (max-width: 768px) {
+      flex-direction: column;
+      .order-blocks,
+      .summary-block {
+        flex: 1;
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
   }
 `;
 

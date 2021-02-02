@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 const EditProductStyled = styled.section`
   min-height: calc(100vh-100px);
+
+  z-index: -1 !important;
   .form {
     flex: 1;
     background: var(--bg-color);
@@ -25,7 +27,6 @@ const EditProductStyled = styled.section`
           font-weight: lighter;
         }
         input {
-          z-index: 100;
           padding: 0.7rem;
           margin: 0.7rem 0;
           border: none;
@@ -56,6 +57,25 @@ const EditProductStyled = styled.section`
             }
             input:nth-child(2) {
               margin-top: 0;
+            }
+          }
+        }
+        &.check {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          background: white;
+          padding: 0.2rem 0.7rem;
+          margin-top: 7px;
+          margin-bottom: 8px;
+          input {
+            display: inline-block;
+            width: 14px;
+            margin-left: 8px;
+            outline: none;
+            &:focus {
+              outline: 2px solid var(--red);
+              outline-style: ;
             }
           }
         }
@@ -105,6 +125,11 @@ const EditProductStyled = styled.section`
     p.warning {
       color: red;
       background: var(--light-pink);
+    }
+  }
+  @media (max-width: 768px) {
+    .form {
+      z-index: 0;
     }
   }
 `;
