@@ -26,7 +26,7 @@ const ProfileView = ({ history }) => {
   const { userInfo } = useSelector((state) => state.userLogin);
   const { success } = useSelector((state) => state.userUpdate);
   const { loading: loadingOrders, error: errorOrders, orders } = useSelector(
-    (state) => state.orderUsersOrders,
+    (state) => state.orderUsersOrders
   );
 
   useEffect(() => {
@@ -147,10 +147,28 @@ const ProfileView = ({ history }) => {
                           <td>{order.createdAt.split("T")[0]}</td>
                           <td>{order.totalPrice} zł</td>
                           <td>
-                            {order.isPaid ? <FcCheckmark /> : <FcCancel />}
+                            {order.isPaid ? (
+                              <div className="tooltip">
+                                <FcCheckmark />
+                                <span className="tooltip-info">
+                                  {order.paidAt.split("T")[0]}
+                                </span>
+                              </div>
+                            ) : (
+                              <FcCancel />
+                            )}
                           </td>
                           <td>
-                            {order.isDelivered ? <FcCheckmark /> : <FcCancel />}
+                            {order.isDelivered ? (
+                              <div className="tooltip">
+                                <FcCheckmark />
+                                <span className="tooltip-info">
+                                  {order.deliveredAt.split("T")[0]}
+                                </span>
+                              </div>
+                            ) : (
+                              <FcCancel />
+                            )}
                           </td>
                           <td>
                             <Link to={`/zamowienie/${order._id}`}>Pokaż</Link>

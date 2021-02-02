@@ -23,6 +23,7 @@ import {
   orderDetailsReducer,
   orderPayReducer,
   orderUsersOrdersReducer,
+  orderListReducer,
 } from "./redux/reducers/orderReducers";
 
 const reducer = combineReducers({
@@ -43,6 +44,7 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderUsersOrders: orderUsersOrdersReducer,
+  orderList: orderListReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
@@ -75,7 +77,7 @@ const middleware = [thunk];
 const store = createStore(
   reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware)),
+  composeWithDevTools(applyMiddleware(...middleware))
 );
 
 export default store;

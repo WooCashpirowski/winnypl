@@ -10,7 +10,7 @@ import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
 import { Link } from "react-router-dom";
 
-const OrderView = ({ match }) => {
+const OrderView = ({ match, history }) => {
   const orderId = match.params.id;
   const [sdkReady, setSdkReady] = useState(false);
 
@@ -18,8 +18,9 @@ const OrderView = ({ match }) => {
 
   const { loading, error, order } = useSelector((state) => state.orderDetails);
   const { loading: loadingPay, success: successPay } = useSelector(
-    (state) => state.orderPay,
+    (state) => state.orderPay
   );
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
     const addPayPalScript = async () => {
@@ -43,7 +44,13 @@ const OrderView = ({ match }) => {
         setSdkReady(true);
       }
     }
-  }, [dispatch, order, orderId, successPay]);
+
+    if (order) {
+      if (!userInfo.isAdmin && userInfo._id !== order.user._id) {
+        history.push("/");
+      }
+    }
+  }, [dispatch, order, orderId, successPay, history, userInfo]);
 
   if (!loading) {
     order.itemsPrice = order.orderItems
@@ -73,7 +80,7 @@ const OrderView = ({ match }) => {
                 <p>
                   Adres: {order.shippingAddress.address},{" "}
                   {order.shippingAddress.postalCode},{" "}
-                  {order.shippingAddress.city}, {order.shippingAddress.country},
+                  {order.shippingAddress.city}, {order.shippingAddress.country}
                 </p>
                 {!order.isDelivered && (
                   <p className="warning">Nie dostarczono</p>

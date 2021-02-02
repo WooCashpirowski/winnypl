@@ -125,6 +125,22 @@ const ProfileStyled = styled.section`
               svg {
                 font-size: 16px;
               }
+              .tooltip {
+                position: relative;
+                .tooltip-info {
+                  position: absolute;
+                  z-index: 1;
+                  visibility: hidden;
+                  background: var(--dark-red);
+                  color: white;
+                  padding: 0.2rem 0.5rem;
+                  font-size: 12px;
+                  transform: translateX(-10px);
+                }
+                &:hover .tooltip-info {
+                  visibility: visible;
+                }
+              }
             }
           }
         }
