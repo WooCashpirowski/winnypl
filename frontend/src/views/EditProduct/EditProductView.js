@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import EditProductStyled from "./EditProductStyled";
 import { useDispatch, useSelector } from "react-redux";
-import { listProductDetails, updateProduct } from "../../redux/actions/productActions";
+import {
+  listProductDetails,
+  updateProduct,
+} from "../../redux/actions/productActions";
 import Loader from "../../components/Loader/Loader";
 import { Link } from "react-router-dom";
 import { PRODUCT_UPDATE_RESET } from "../../redux/constants/productConstants";
@@ -18,14 +22,17 @@ const EditProductView = ({ match, history }) => {
   const [price, setPrice] = useState(0);
   const [countInStock, setCountInStock] = useState(0);
   const [subcategory, setSubcategory] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
   const { product, loading, error } = useSelector(
-    (state) => state.productDetails,
+    (state) => state.productDetails
   );
-  const { success: successUpdate, loading: loadingUpdate, error: errorUpdate } = useSelector(
-    (state) => state.productUpdate,
-  );
+  const {
+    success: successUpdate,
+    loading: loadingUpdate,
+    error: errorUpdate,
+  } = useSelector((state) => state.productUpdate);
 
   const { userInfo } = useSelector((state) => state.userLogin);
 
@@ -33,9 +40,9 @@ const EditProductView = ({ match, history }) => {
     if (!userInfo.isAdmin) {
       history.push("/login");
     }
-    if(successUpdate) {
-      dispatch({type: PRODUCT_UPDATE_RESET})
-      history.push("/admin/produkty")
+    if (successUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_RESET });
+      history.push("/admin/produkty");
     } else {
       if (!product || productId !== product._id) {
         dispatch(listProductDetails(productId));
@@ -55,23 +62,46 @@ const EditProductView = ({ match, history }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProduct({
-      _id: productId,
-      name,
-      price,
-      brand,
-      category,
-      subcategory,
-      countInStock,
-      description,
-      image,
-      featured,
-    }))
+    dispatch(
+      updateProduct({
+        _id: productId,
+        name,
+        price,
+        brand,
+        category,
+        subcategory,
+        countInStock,
+        description,
+        image,
+        featured,
+      })
+    );
+  };
+
+  const handleUploadImage = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const { data } = await axios.post("/api/upload", formData, config);
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
   };
 
   return (
     <>
-      {loading || loadingUpdate ? (
+      {loading || loadingUpdate || uploading ? (
         <Loader />
       ) : (
         <EditProductStyled>
@@ -147,12 +177,19 @@ const EditProductView = ({ match, history }) => {
               </label>
               <label>
                 <p>Zdjęcie</p>
-                <input
-                  type="text"
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
-                  placeholder={"" || (product && product.image)}
-                ></input>
+                <div className="add-img">
+                  <input
+                    type="text"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                    placeholder={"" || (product && product.image)}
+                  ></input>
+                  <input
+                    type="file"
+                    placeholder="Wybierz plik"
+                    onChange={handleUploadImage}
+                  ></input>
+                </div>
               </label>
               <label>
                 <p>Wyróżnione</p>
@@ -162,13 +199,13 @@ const EditProductView = ({ match, history }) => {
                   onChange={() => setFeatured(!featured)}
                 ></input>
               </label>
-              <button type="submit" variant="primary">
+              <button type="submit">
                 <div className="slide" />
                 <span>Zapisz</span>
               </button>
             </form>
-            {error && <p className="warning">{error}</p> }
-            {errorUpdate && <p className="warning">{errorUpdate}</p> }
+            {error && <p className="warning">{error}</p>}
+            {errorUpdate && <p className="warning">{errorUpdate}</p>}
           </div>
         </EditProductStyled>
       )}

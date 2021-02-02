@@ -45,6 +45,20 @@ const EditProductStyled = styled.section`
             height: 100%;
           }
         }
+        .add-img {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          @media (max-width: 600px) {
+            flex-wrap: wrap;
+            input:first-child {
+              margin-bottom: 0;
+            }
+            input:nth-child(2) {
+              margin-top: 0;
+            }
+          }
+        }
       }
       button {
         display: inline-block;
@@ -89,9 +103,9 @@ const EditProductStyled = styled.section`
       }
     }
     p.warning {
-    color: red;
-    background: var(--light-pink);
-  }
+      color: red;
+      background: var(--light-pink);
+    }
   }
 `;
 
