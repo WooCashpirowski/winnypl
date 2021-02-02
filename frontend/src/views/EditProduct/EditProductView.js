@@ -37,7 +37,7 @@ const EditProductView = ({ match, history }) => {
   const { userInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
-    if (!userInfo.isAdmin) {
+    if (!userInfo || !userInfo.isAdmin) {
       history.push("/login");
     }
     if (successUpdate) {

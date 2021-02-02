@@ -17,7 +17,7 @@ import Loader from "../../components/Loader/Loader";
 const UsersListView = ({ match, history }) => {
   const dispatch = useDispatch();
   const { loading, error, products } = useSelector(
-    (state) => state.productList,
+    (state) => state.productList
   );
   const { userInfo } = useSelector((state) => state.userLogin);
   const {
@@ -37,8 +37,8 @@ const UsersListView = ({ match, history }) => {
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
 
-    if (!userInfo.isAdmin) {
-      history.push("/login");
+    if (!userInfo || !userInfo.isAdmin) {
+      history.push("/zaloguj");
     }
 
     if (successCreate) {
