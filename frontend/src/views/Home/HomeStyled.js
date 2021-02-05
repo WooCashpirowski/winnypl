@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const HomeStyled = styled.section`
   min-height: calc(100vh - 100px);

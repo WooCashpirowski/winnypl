@@ -43,8 +43,6 @@ const Header = ({ history }) => {
     history.push("/");
   };
 
-  console.log(cartItems);
-
   return (
     <HeaderStyled>
       <button
@@ -81,9 +79,6 @@ const Header = ({ history }) => {
         </NavLink>
         <div className={showNav ? "navbar active" : "navbar"}>
           <div className="nav-links">
-            <NavLink onClick={closeNav} className="nav-link" to="/katalog">
-              KATALOG
-            </NavLink>
             <NavLink onClick={closeNav} className="nav-link" to="/o-nas">
               O NAS
             </NavLink>

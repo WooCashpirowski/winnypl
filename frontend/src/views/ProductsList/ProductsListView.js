@@ -13,10 +13,13 @@ import {
 } from "../../redux/actions/productActions";
 import { PRODUCT_CREATE_RESET } from "../../redux/constants/productConstants";
 import Loader from "../../components/Loader/Loader";
+import Paginate from "../../components/Paginate/Paginate";
 
-const UsersListView = ({ match, history }) => {
+const ProductsListView = ({ match, history }) => {
+  const pageNo = match.params.pageNumber || 1;
+
   const dispatch = useDispatch();
-  const { loading, error, products } = useSelector(
+  const { loading, error, products, pages, page } = useSelector(
     (state) => state.productList
   );
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -44,14 +47,22 @@ const UsersListView = ({ match, history }) => {
     if (successCreate) {
       history.push(`/admin/produkty/${newProduct._id}/edycja`);
     } else {
-      dispatch(listProducts());
+      dispatch(listProducts("", pageNo));
     }
 
     if (successDel) {
       setMessage("Produkt usunięty");
       setTimeout(() => setMessage(""), 2000);
     }
-  }, [dispatch, history, userInfo, successDel, successCreate, newProduct]);
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    successDel,
+    successCreate,
+    newProduct,
+    pageNo,
+  ]);
 
   const handleDeleteProduct = (id) => {
     if (window.confirm("Potwierdź usunięcie produktu")) {
@@ -131,10 +142,11 @@ const UsersListView = ({ match, history }) => {
             <p className={errorCreate ? "warning" : ""}>{errorCreate}</p>
             <p className={error ? "warning" : ""}>{error}</p>
           </div>
+          <Paginate pages={pages} page={page} isAdmin={true} />
         </Products>
       )}
     </>
   );
 };
 
-export default UsersListView;
+export default ProductsListView;

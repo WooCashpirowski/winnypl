@@ -5,16 +5,19 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 import { HomeStyled } from "./HomeStyled";
 import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
+import Paginate from "../../components/Paginate/Paginate";
 
 const Home = ({ match }) => {
   const keyword = match.params.keyword;
+  const pageNumber = match.params.pageNumber || 1;
 
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, pages, page } = useSelector(
+    (state) => state.productList
+  );
   useEffect(() => {
-    dispatch(listProducts(keyword));
-  }, [dispatch, keyword]);
+    dispatch(listProducts(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
 
   return (
     <HomeStyled>
@@ -24,12 +27,17 @@ const Home = ({ match }) => {
         <Message>{error}</Message>
       ) : (
         <>
-          <h1 className="section-header">Polecane</h1>
+          <h1 className="section-header">Nasze Produkty</h1>
           <div className="section featured">
             {products.map((product) => (
               <ProductCard product={product} key={product.name} />
             ))}
           </div>
+          <Paginate
+            pages={pages}
+            page={page}
+            keyword={keyword ? keyword : ""}
+          />
         </>
       )}
     </HomeStyled>

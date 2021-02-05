@@ -28,6 +28,10 @@ function App() {
         />
         <Route path="/admin/zamowienia" component={OrderListView} exact />
         <Route path="/admin/produkty/:id/edycja" component={EditProductView} />
+        <Route
+          path="/admin/produkty/:pageNumber"
+          component={ProductsListView}
+        />
         <Route path="/admin/produkty" component={ProductsListView} exact />
         <Route path="/admin/uzytkownicy" component={UsersListView} exact />
         <Route path="/zamowienie/:id" component={OrderView} />
@@ -39,7 +43,13 @@ function App() {
         <Route path="/zaloguj" component={LoginView} />
         <Route path="/rejestracja" component={RegisterView} />
         <Route path="/moje-konto" component={ProfileView} />
-        <Route path="/search/:keyword" component={HomeView} />
+        <Route path="/szukaj/:keyword" component={HomeView} exact />
+        <Route path="/strona/:pageNumber" component={HomeView} />
+        <Route
+          path="/szukaj/:keyword/strona/:pageNumber"
+          component={HomeView}
+          exact
+        />
         <Route path="/" component={HomeView} exact />
       </main>
       <Footer />
