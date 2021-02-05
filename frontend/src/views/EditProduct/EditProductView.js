@@ -196,6 +196,7 @@ const EditProductView = ({ match, history }) => {
                 Wyróżnione
                 <input
                   type="checkbox"
+                  checked={featured}
                   value={featured}
                   onChange={() => setFeatured(!featured)}
                 ></input>

@@ -6,6 +6,7 @@ import { HomeStyled } from "./HomeStyled";
 import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
 import Paginate from "../../components/Paginate/Paginate";
+import HomeCarousel from "../../components/HomeCarousel/HomeCarousel";
 
 const Home = ({ match }) => {
   const keyword = match.params.keyword;
@@ -27,6 +28,7 @@ const Home = ({ match }) => {
         <Message>{error}</Message>
       ) : (
         <>
+          <HomeCarousel products={products} />
           <h1 className="section-header">Nasze Produkty</h1>
           <div className="section featured">
             {products.map((product) => (
