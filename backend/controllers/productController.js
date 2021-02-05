@@ -110,7 +110,7 @@ const createProductReview = asyncHandler(async (req, res) => {
     );
     if (isReviewed) {
       res.status(400);
-      throw new Error("Produkt został już oceniony");
+      throw new Error("Produkt został już przez Ciebie oceniony");
     }
     const review = {
       name: req.user.name,

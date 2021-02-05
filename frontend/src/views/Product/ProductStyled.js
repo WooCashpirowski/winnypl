@@ -84,6 +84,23 @@ const ProductStyled = styled.section`
         }
       }
     }
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: center;
+      .image-section {
+        img {
+          width: 300px;
+        }
+      }
+      .middle-section {
+        padding-right: 0;
+        padding-bottom: 1rem;
+      }
+      .add-to-cart-section {
+        width: 300px;
+        margin-top: 1rem;
+      }
+    }
   }
 `;
 

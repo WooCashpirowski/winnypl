@@ -75,7 +75,6 @@ const EditProductStyled = styled.section`
             outline: none;
             &:focus {
               outline: 2px solid var(--red);
-              outline-style: ;
             }
           }
         }

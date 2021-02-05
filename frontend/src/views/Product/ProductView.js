@@ -18,6 +18,8 @@ const ProductView = ({ match, history }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
+  const productId = match.params.id;
+
   const dispatch = useDispatch();
 
   const { loading, error, product } = useSelector(
@@ -33,14 +35,28 @@ const ProductView = ({ match, history }) => {
   const { userInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
-    dispatch(listProductDetails(match.params.id));
-  }, [dispatch, match]);
+    if (successReview) {
+      setRating(0);
+      setComment("");
+      dispatch({ type: PRODUCT_REVIEW_RESET });
+    }
+
+    dispatch(listProductDetails(productId));
+  }, [dispatch, productId, successReview]);
 
   const addToCart = () => {
-    history.push(`/koszyk/${match.params.id}?qty=${qty}`);
+    history.push(`/koszyk/${productId}?qty=${qty}`);
   };
 
-  const handleSubmit = () => console.log("submitted");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      createReview(productId, {
+        rating: parseInt(rating),
+        comment,
+      })
+    );
+  };
 
   return (
     <>
@@ -64,7 +80,7 @@ const ProductView = ({ match, history }) => {
                 <div className="rating">
                   <Rating
                     value={product.rating}
-                    text={`${product.numReviews} ocen`}
+                    text={`Liczba ocen: ${product.numReviews}`}
                   />
                 </div>
                 <h3>{product.price} zł</h3>
@@ -111,49 +127,62 @@ const ProductView = ({ match, history }) => {
               </div>
             </div>
           )}
+          {loadingReview ? (
+            <Loader />
+          ) : (
+            <Reviews>
+              <h3>Opinie</h3>
+              {product.reviews.length === 0 && (
+                <p className="info">Brak komentarzy. Dodaj pierwszą opinię.</p>
+              )}
+              {product.reviews.map((review) => (
+                <div className="review" key={review._id}>
+                  <strong>{review.name}</strong>
+                  <Rating value={review.rating} />
+                  <p>{review.createdAt.substring(0, 10)}</p>
+                  <p>{review.comment}</p>
+                </div>
+              ))}
+              <h4>Dodaj swoją opinię</h4>
+              {userInfo ? (
+                <form onSubmit={handleSubmit}>
+                  <select
+                    value={rating}
+                    onChange={(e) => setRating(e.target.value)}
+                  >
+                    <option value="">wybierz...</option>
+                    <option value="1">1 - słabiutkie</option>
+                    <option value="2">2 - takie sobie</option>
+                    <option value="3">3 - znośne</option>
+                    <option value="4">4 - dobre</option>
+                    <option value="5">5 - doskonałe</option>
+                  </select>
+                  <label>
+                    <p>Komentarz</p>
+                    <textarea
+                      rows="3"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    ></textarea>
+                  </label>
+                  <button type="submit" disabled={!comment}>
+                    <div className="slide" />
+                    <span>Dodaj opinię</span>
+                  </button>
+                </form>
+              ) : (
+                <p className="info">
+                  <Link to="/zaloguj">Zaloguj się</Link> aby dodać komentarz.
+                </p>
+              )}
+              {errorReview && <p className="warning">{errorReview}</p>}
+              {successReview && (
+                <p className="info">Dziękujemy za Twoją opinię</p>
+              )}
+            </Reviews>
+          )}
         </>
       </ProductStyled>
-      <Reviews>
-        <h3>Opinie</h3>
-        {product.reviews.length === 0 && (
-          <p className="info">
-            Brak komentarzy. Dodaj swoją opinię jako pierwszy.
-          </p>
-        )}
-        {product.reviews.map((review) => (
-          <div className="review" key={review._id}>
-            <strong>{review.name}</strong>
-            <Rating value={review.rating} />
-            <p>{review.createdAt.substring(0, 10)}</p>
-            <p>{review.comment}</p>
-          </div>
-        ))}
-        <h4>Dodaj swoją opinię</h4>
-        {userInfo ? (
-          <form onSubmit={handleSubmit}>
-            <select value={rating} onChange={(e) => setRating(e.target.vlue)}>
-              <option value="">wybierz...</option>
-              <option value="1">1 - słabiutkie</option>
-              <option value="2">2 - takie sobie</option>
-              <option value="3">3 - znośne</option>
-              <option value="4">4 - dobre</option>
-              <option value="5">5 - doskonałe</option>
-            </select>
-            <label>
-              <p>Komentarz</p>
-              <textarea
-                rows="3"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              ></textarea>
-            </label>
-          </form>
-        ) : (
-          <p className="info">
-            <Link to="/zaloguj">Zaloguj się</Link> aby dodać komentarz.
-          </p>
-        )}
-      </Reviews>
     </>
   );
 };

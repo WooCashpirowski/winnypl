@@ -41,6 +41,19 @@ p {
   font-size: 14px;
 }
 
+p.warning {
+  color: red;
+  background: var(--light-pink);
+  padding: 0.5rem;
+  font-size: 12px;
+}
+p.info {
+  color: green;
+  background: lightgreen;
+  padding: 0.5rem;
+  font-size: 12px;
+}
+
 main {
   min-height: 80vh;
   padding: 1rem 0;
