@@ -108,6 +108,21 @@ export const HeaderStyled = styled.header`
             .logout {
               width: 24px;
             }
+            .cart-icon {
+              position: relative;
+              span {
+                position: absolute;
+                bottom: -2px;
+                right: -10px;
+                font-size: 10px;
+                padding: 2px 4px;
+                line-height: 10px;
+                background: var(--dark);
+                color: white;
+                display: block;
+                text-align: center;
+              }
+            }
           }
         }
         input {

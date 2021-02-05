@@ -9,15 +9,18 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoMdClose } from "react-icons/io";
 import { FiLogOut } from "react-icons/fi";
 import { logout } from "../../redux/actions/userActions";
+import SearchBox from "../SearchBox/SearchBox";
 
 const Header = ({ history }) => {
   const [showNav, setShowNav] = useState(false);
   const toggleNav = () => setShowNav(!showNav);
   const closeNav = () => setShowNav(false);
   const [lastYPos, setLastYPos] = useState(0);
+  const [inCart, setInCart] = useState(0);
 
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userLogin);
+  const { cartItems } = useSelector((state) => state.cart);
 
   useEffect(() => {
     function handleScroll() {
@@ -27,11 +30,20 @@ const Header = ({ history }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastYPos]);
 
+  useEffect(() => {
+    if (cartItems) {
+      const cartTotal = cartItems.reduce((acc, i) => i.qty + acc, 0);
+      setInCart(cartTotal);
+    }
+  }, [cartItems]);
+
   const handleLogout = () => {
     dispatch(logout());
     closeNav();
     history.push("/");
   };
+
+  console.log(cartItems);
 
   return (
     <HeaderStyled>
@@ -79,7 +91,10 @@ const Header = ({ history }) => {
           <div className="user-nav">
             <div className="user-nav-links">
               <NavLink onClick={closeNav} className="nav-link" to="/koszyk">
-                <ImCart style />
+                <div className="cart-icon">
+                  <ImCart />
+                  <span>{inCart}</span>
+                </div>
               </NavLink>
               {userInfo ? (
                 <>
@@ -100,7 +115,7 @@ const Header = ({ history }) => {
                 </NavLink>
               )}
             </div>
-            <input type="text" placeholder="Znajdź w naszym sklepie" />
+            <SearchBox />
           </div>
         </div>
       </nav>

@@ -39,6 +39,7 @@ function App() {
         <Route path="/zaloguj" component={LoginView} />
         <Route path="/rejestracja" component={RegisterView} />
         <Route path="/moje-konto" component={ProfileView} />
+        <Route path="/search/:keyword" component={HomeView} />
         <Route path="/" component={HomeView} exact />
       </main>
       <Footer />
