@@ -7,6 +7,7 @@ const Search = styled.div`
     display: flex;
     position: relative;
     overflow: hidden;
+    width: 280px;
     input {
       &:focus {
         &::placeholder {

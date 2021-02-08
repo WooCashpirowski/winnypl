@@ -79,9 +79,9 @@ const Header = ({ history }) => {
         </NavLink>
         <div className={showNav ? "navbar active" : "navbar"}>
           <div className="nav-links">
-            <NavLink onClick={closeNav} className="nav-link" to="/o-nas">
+            {/* <NavLink onClick={closeNav} className="nav-link" to="/o-nas">
               O NAS
-            </NavLink>
+            </NavLink> */}
           </div>
           <div className="user-nav">
             <div className="user-nav-links">

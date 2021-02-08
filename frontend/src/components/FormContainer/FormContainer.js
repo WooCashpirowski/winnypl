@@ -9,8 +9,11 @@ const FormStyled = styled.div`
   width: 315px;
   margin: 2rem auto 0;
   padding: 1rem;
-  background: var(--light-pink);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(0deg, white 0%, var(--dark-pink) 50%);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  h1.section-header {
+    color: white;
+  }
   form {
     display: flex;
     flex-direction: column;
@@ -44,7 +47,8 @@ const FormStyled = styled.div`
       border: none;
       padding: 0.4rem;
       margin-top: 0.5rem;
-      background: var(--light-pink);
+      /* background: var(--light-pink); */
+      background: none;
       border: 2px solid var(--dark-red);
       font-size: 16px;
       color: var(--dark-secondary);

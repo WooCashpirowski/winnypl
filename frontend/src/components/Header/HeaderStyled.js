@@ -90,7 +90,7 @@ export const HeaderStyled = styled.header`
         height: 100%;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-end;
         justify-content: space-around;
         padding: 1rem;
         .user-nav-links {
@@ -171,7 +171,7 @@ export const HeaderStyled = styled.header`
     nav {
       flex-direction: column;
       .navbar {
-        flex-direction: column;
+        flex-direction: column-reverse;
         width: 100%;
         margin-left: -200%;
         margin-top: -8px;

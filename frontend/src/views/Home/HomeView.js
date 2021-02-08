@@ -21,28 +21,29 @@ const Home = ({ match }) => {
   }, [dispatch, keyword, pageNumber]);
 
   return (
-    <HomeStyled>
+    <>
       {loading ? (
         <Loader />
-      ) : error ? (
-        <Message>{error}</Message>
       ) : (
         <>
-          <HomeCarousel products={products} />
-          <h1 className="section-header">Nasze Produkty</h1>
-          <div className="section featured">
-            {products.map((product) => (
-              <ProductCard product={product} key={product.name} />
-            ))}
-          </div>
-          <Paginate
-            pages={pages}
-            page={page}
-            keyword={keyword ? keyword : ""}
-          />
+          {!keyword && <HomeCarousel products={products} />}
+          <HomeStyled>
+            <h1 className="section-header">Nasze Produkty</h1>
+            {error && <p className="warning">{error}</p>}
+            <div className="section featured">
+              {products.map((product) => (
+                <ProductCard product={product} key={product.name} />
+              ))}
+            </div>
+            <Paginate
+              pages={pages}
+              page={page}
+              keyword={keyword ? keyword : ""}
+            />
+          </HomeStyled>
         </>
       )}
-    </HomeStyled>
+    </>
   );
 };
 

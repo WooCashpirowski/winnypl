@@ -31,6 +31,7 @@ function App() {
         <Route
           path="/admin/produkty/:pageNumber"
           component={ProductsListView}
+          exact
         />
         <Route path="/admin/produkty" component={ProductsListView} exact />
         <Route path="/admin/uzytkownicy" component={UsersListView} exact />

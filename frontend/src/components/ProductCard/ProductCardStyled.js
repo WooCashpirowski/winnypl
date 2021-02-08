@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const ProductCardStyled = styled.div`
   text-align: center;
-  width: 200px;
+  width: 250px;
   height: 350px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
   position: relative;

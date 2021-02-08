@@ -56,6 +56,9 @@ p.info {
 
 main {
   min-height: 80vh;
+}
+
+section {
   padding: 1rem 0;
   margin: 0 2rem;
 }
@@ -84,7 +87,7 @@ main {
 }
 
 @media (max-width: 400px) {
-  main {
-    margin: 0;
+  section {
+    margin: 0.2rem;
   }
 }

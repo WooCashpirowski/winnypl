@@ -11,9 +11,17 @@ const ProductStyled = styled.section`
     );
     padding: 1rem;
     .image-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 350px;
+      overflow: hidden;
       flex: 4;
+      margin: 0 1rem 0 0;
+      padding: 0.5rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
       img {
-        width: 100%;
+        height: 100%;
       }
     }
     .middle-section {
@@ -29,13 +37,7 @@ const ProductStyled = styled.section`
         display: flex;
         justify-content: space-between;
         padding: 0.5rem;
-        border: 1px solid var(--dark-secondary);
-        &:first-child {
-          border-bottom: none;
-        }
-        &:nth-child(3) {
-          border-top: none;
-        }
+        border-bottom: 1px solid var(--dark-secondary);
         span {
           font-weight: 500;
           select {
@@ -86,19 +88,25 @@ const ProductStyled = styled.section`
     }
     @media (max-width: 768px) {
       flex-direction: column;
-      align-items: center;
       .image-section {
-        img {
-          width: 300px;
-        }
+        width: 250px;
       }
       .middle-section {
         padding-right: 0;
         padding-bottom: 1rem;
       }
       .add-to-cart-section {
-        width: 300px;
+        width: 100%;
         margin-top: 1rem;
+        button {
+          width: 160px;
+        }
+      }
+    }
+    @media (max-width: 425px) {
+      flex-direction: column;
+      .image-section {
+        width: 100%;
       }
     }
   }
