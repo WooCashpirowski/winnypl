@@ -14,6 +14,7 @@ import {
 import { PRODUCT_CREATE_RESET } from "../../redux/constants/productConstants";
 import Loader from "../../components/Loader/Loader";
 import Paginate from "../../components/Paginate/Paginate";
+import Accordion from "../../components/Accordion/Accordion";
 
 const ProductsListView = ({ match, history }) => {
   const pageNo = match.params.pageNumber || 1;
@@ -137,6 +138,7 @@ const ProductsListView = ({ match, history }) => {
                 ))}
               </tbody>
             </table>
+            <Accordion></Accordion>
             <p className={message ? "info" : ""}>{message}</p>
             <p className={errorDel ? "warning" : ""}>{errorDel}</p>
             <p className={errorCreate ? "warning" : ""}>{errorCreate}</p>
