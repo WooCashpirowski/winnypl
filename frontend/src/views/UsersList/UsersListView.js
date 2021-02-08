@@ -9,6 +9,7 @@ import { IoPersonRemoveOutline } from "react-icons/io5";
 import { listUsers, deleteUser } from "../../redux/actions/userActions";
 import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
+import Accordion from "../../components/Accordion/Accordion";
 
 const UsersListView = ({ history }) => {
   const dispatch = useDispatch();
@@ -80,6 +81,30 @@ const UsersListView = ({ history }) => {
                 ))}
               </tbody>
             </table>
+            {users.map((user) => (
+              <Accordion
+                key={user._id}
+                title={`${users.indexOf(user) + 1}. ${user.name}`}
+              >
+                <Link to={`/admin/uzytkownicy/${user._id}/edycja`}>
+                  <p>
+                    ID: <b>{user._id}</b>
+                  </p>
+                  <p>
+                    Email: <b>{user.email}</b>
+                  </p>
+                  <p>Admin: {user.isAdmin ? <FcCheckmark /> : <FcCancel />}</p>
+                </Link>
+                <button
+                  className="delete-btn"
+                  type="button"
+                  onClick={() => handleDeleteUser(user._id)}
+                  disabled={userInfo._id === user._id}
+                >
+                  <IoPersonRemoveOutline />
+                </button>
+              </Accordion>
+            ))}
             <p className={successDel && message ? "info" : ""}>{message}</p>
           </div>
         </Users>

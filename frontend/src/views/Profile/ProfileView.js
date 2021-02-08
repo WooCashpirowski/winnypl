@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Table } from "react-bootstrap";
 import ProfileStyled from "./ProfileStyled";
 import {
   getUserDetails,
@@ -13,6 +12,7 @@ import { Link } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import { FcCheckmark } from "react-icons/fc";
 import { FcCancel } from "react-icons/fc";
+import Accordion from "../../components/Accordion/Accordion";
 
 const ProfileView = ({ history }) => {
   const [name, setName] = useState("");
@@ -26,7 +26,7 @@ const ProfileView = ({ history }) => {
   const { userInfo } = useSelector((state) => state.userLogin);
   const { success } = useSelector((state) => state.userUpdate);
   const { loading: loadingOrders, error: errorOrders, orders } = useSelector(
-    (state) => state.orderUsersOrders
+    (state) => state.orderUsersOrders,
   );
 
   useEffect(() => {
@@ -126,57 +126,89 @@ const ProfileView = ({ history }) => {
               ) : loadingOrders ? (
                 <Loader />
               ) : (
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th className="hide">ID</th>
-                      <th>Data</th>
-                      <th>Wartość</th>
-                      <th>Opłacone</th>
-                      <th>Dostarczone</th>
-                      <th>Szczegóły</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {orders &&
-                      orders.map((order) => (
-                        <tr key={order._id}>
-                          <td>{orders.indexOf(order) + 1}.</td>
-                          <td className="hide">{order._id}</td>
-                          <td>{order.createdAt.split("T")[0]}</td>
-                          <td>{order.totalPrice} zł</td>
-                          <td>
-                            {order.isPaid ? (
-                              <div className="tooltip">
-                                <FcCheckmark />
-                                <span className="tooltip-info">
-                                  {order.paidAt.split("T")[0]}
-                                </span>
-                              </div>
-                            ) : (
-                              <FcCancel />
-                            )}
-                          </td>
-                          <td>
-                            {order.isDelivered ? (
-                              <div className="tooltip">
-                                <FcCheckmark />
-                                <span className="tooltip-info">
-                                  {order.deliveredAt.split("T")[0]}
-                                </span>
-                              </div>
-                            ) : (
-                              <FcCancel />
-                            )}
-                          </td>
-                          <td>
-                            <Link to={`/zamowienie/${order._id}`}>Pokaż</Link>
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </Table>
+                <>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th className="hide">ID</th>
+                        <th>Data</th>
+                        <th>Wartość</th>
+                        <th>Opłacone</th>
+                        <th>Dostarczone</th>
+                        <th>Szczegóły</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orders &&
+                        orders.map((order) => (
+                          <tr key={order._id}>
+                            <td>{orders.indexOf(order) + 1}.</td>
+                            <td className="hide">{order._id}</td>
+                            <td>{order.createdAt.split("T")[0]}</td>
+                            <td>{order.totalPrice} zł</td>
+                            <td>
+                              {order.isPaid ? (
+                                <div className="tooltip">
+                                  <FcCheckmark />
+                                  <span className="tooltip-info">
+                                    {order.paidAt.split("T")[0]}
+                                  </span>
+                                </div>
+                              ) : (
+                                <FcCancel />
+                              )}
+                            </td>
+                            <td>
+                              {order.isDelivered ? (
+                                <div className="tooltip">
+                                  <FcCheckmark />
+                                  <span className="tooltip-info">
+                                    {order.deliveredAt.split("T")[0]}
+                                  </span>
+                                </div>
+                              ) : (
+                                <FcCancel />
+                              )}
+                            </td>
+                            <td>
+                              <Link to={`/zamowienie/${order._id}`}>Pokaż</Link>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                  {orders &&
+                    orders.map((order) => (
+                      <Accordion
+                        key={order._id}
+                        title={`${orders.indexOf(order) + 1}. ${order._id}`}
+                      >
+                        <Link to={`/zamowienie/${order._id}`}>
+                          <p>Utworzone: {order.createdAt.split("T")[0]}</p>
+                          <p>Wartość zamówienia: {order.totalPrice} zł</p>
+                          {order.isPaid ? (
+                            <p>Opłacone {order.paidAt.split("T")[0]}</p>
+                          ) : (
+                            <p>
+                              Nie opłacone <FcCancel />
+                            </p>
+                          )}
+
+                          {order.isDelivered ? (
+                            <p>
+                              Dostarczone
+                              {order.deliveredAt.split("T")[0]}
+                            </p>
+                          ) : (
+                            <p>
+                              Nie dostarczone <FcCancel />
+                            </p>
+                          )}
+                        </Link>
+                      </Accordion>
+                    ))}
+                </>
               )}
             </div>
           </div>

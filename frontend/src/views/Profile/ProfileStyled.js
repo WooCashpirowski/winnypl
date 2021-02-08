@@ -163,6 +163,13 @@ const ProfileStyled = styled.section`
         }
       }
     }
+    @media (max-width: 768px) {
+      .my-orders {
+        table {
+          display: none;
+        }
+      }
+    }
   }
 `;
 

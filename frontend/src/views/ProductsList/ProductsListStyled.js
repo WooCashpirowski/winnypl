@@ -119,6 +119,11 @@ const Products = styled.section`
     color: red;
     background: var(--light-pink);
   }
+  @media (max-width: 768px) {
+    table {
+      display: none;
+    }
+  }
 `;
 
 export default Products;

@@ -82,6 +82,11 @@ const Orders = styled.section`
     padding: 0.2rem 0;
     font-size: 12px;
   }
+  @media (max-width: 768px) {
+    table {
+      display: none;
+    }
+  }
 `;
 
 export default Orders;

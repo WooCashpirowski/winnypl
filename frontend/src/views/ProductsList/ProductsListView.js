@@ -21,7 +21,7 @@ const ProductsListView = ({ match, history }) => {
 
   const dispatch = useDispatch();
   const { loading, error, products, pages, page } = useSelector(
-    (state) => state.productList
+    (state) => state.productList,
   );
   const { userInfo } = useSelector((state) => state.userLogin);
   const {
@@ -138,7 +138,46 @@ const ProductsListView = ({ match, history }) => {
                 ))}
               </tbody>
             </table>
-            <Accordion></Accordion>
+            {products.map((product) => (
+              <Accordion
+                key={product._id}
+                title={`${products.indexOf(product) + 1}. ${product.name}`}
+              >
+                <>
+                  <Link to={`/admin/produkty/${product._id}/edycja`}>
+                    <p>
+                      Marka: <b>{product.brand}</b>
+                    </p>
+                    <p>
+                      Cena: <b>{product.price} zł</b>
+                    </p>
+                    <p>
+                      Kategoria: <b>{product.category}</b>
+                    </p>
+                    <p>
+                      Podkategoria: <b>{product.subcategory}</b>
+                    </p>
+                    <p>
+                      W magazynie:{" "}
+                      <b>
+                        {product.countInStock ? (
+                          `${product.countInStock} szt.`
+                        ) : (
+                          <FcCancel />
+                        )}
+                      </b>
+                    </p>
+                  </Link>
+                  <button
+                    className="delete-btn"
+                    type="button"
+                    onClick={() => handleDeleteProduct(product._id)}
+                  >
+                    <RiDeleteBin2Line style={{ color: "red" }} />
+                  </button>
+                </>
+              </Accordion>
+            ))}
             <p className={message ? "info" : ""}>{message}</p>
             <p className={errorDel ? "warning" : ""}>{errorDel}</p>
             <p className={errorCreate ? "warning" : ""}>{errorCreate}</p>

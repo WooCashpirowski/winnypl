@@ -7,6 +7,7 @@ import { FcCancel } from "react-icons/fc";
 import { listOrders } from "../../redux/actions/orderActions";
 import Loader from "../../components/Loader/Loader";
 import Message from "../../components/Message/Message";
+import Accordion from "../../components/Accordion/Accordion";
 
 const OrderListView = ({ history }) => {
   const dispatch = useDispatch();
@@ -81,6 +82,45 @@ const OrderListView = ({ history }) => {
                 ))}
               </tbody>
             </table>
+            {orders.map((order) => (
+              <Accordion
+                key={order._id}
+                title={`${orders.indexOf(order) + 1}. ${order._id}`}
+              >
+                <Link to={`/zamowienie/${order._id}`}>
+                  <p>
+                    Użytkownik: <b>{order.user.name}</b>
+                  </p>
+                  <p>
+                    Utworzone: <b>{order.createdAt.split("T")[0]}</b>
+                  </p>
+                  <p>
+                    Wartość zamówienia: <b>{order.totalPrice} zł</b>
+                  </p>
+
+                  {order.isPaid ? (
+                    <p>
+                      Opłacone <b>{order.paidAt.split("T")[0]}</b>
+                    </p>
+                  ) : (
+                    <p>
+                      Nie opłacone <FcCancel />
+                    </p>
+                  )}
+
+                  {order.isDelivered ? (
+                    <p>
+                      Dostarczone <b>{order.deliveredAt.split("T")[0]}</b>
+                    </p>
+                  ) : (
+                    <p>
+                      Nie dostarczone
+                      <FcCancel />
+                    </p>
+                  )}
+                </Link>
+              </Accordion>
+            ))}
           </div>
         </Orders>
       )}

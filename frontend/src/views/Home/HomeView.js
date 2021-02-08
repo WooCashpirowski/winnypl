@@ -4,7 +4,6 @@ import { listProducts } from "../../redux/actions/productActions";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { HomeStyled } from "./HomeStyled";
 import Loader from "../../components/Loader/Loader";
-import Message from "../../components/Message/Message";
 import Paginate from "../../components/Paginate/Paginate";
 import HomeCarousel from "../../components/HomeCarousel/HomeCarousel";
 
@@ -14,7 +13,7 @@ const Home = ({ match }) => {
 
   const dispatch = useDispatch();
   const { loading, error, products, pages, page } = useSelector(
-    (state) => state.productList
+    (state) => state.productList,
   );
   useEffect(() => {
     dispatch(listProducts(keyword, pageNumber));
