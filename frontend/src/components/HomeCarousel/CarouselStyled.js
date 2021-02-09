@@ -2,35 +2,57 @@ import styled from "styled-components";
 
 const CarouselStyled = styled.div`
   .carousel {
-    background: linear-gradient(270deg, #cf3142 0%, #260000 100%);
-    .rec.rec-arrow {
-      border-radius: 0;
-      background: none;
-      box-shadow: none;
-    }
-    .rec.rec-dot {
-      height: 6px;
-      width: 6px;
-    }
-    .rec.rec-dot.rec.rec-dot_active {
-      background-color: var(--red);
-      box-shadow: 0 0 1px 3px var(--dark-red);
-    }
-
+    background: linear-gradient(270deg, #cf3142 20%, #260000 100%);
+    position: "relative";
     .slide {
       display: flex;
       align-items: center;
       justify-content: center;
       height: 60vh;
-      .img-wrapper {
+      .wrapper {
         height: 80%;
-        width: 250px;
+        width: 90%;
         overflow: hidden;
         text-align: center;
-        border-radius: 25% 0 25% 0;
-        background: white;
+        border-radius: 15px 0 15px 0;
+        /* background: white; */
+        background: linear-gradient(90deg, white 40%, #cf3142 100%);
+        display: flex;
+        align-items: center;
+        /* justify-content: space-around; */
+        padding: 2rem;
         img {
           height: 100%;
+        }
+        .info {
+          text-align: center;
+          width: 70%;
+          h2 {
+            font-family: "Dancing Script", cursive;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .carousel {
+      .slide {
+        .wrapper {
+          flex-direction: column;
+          justify-content: center;
+          background: linear-gradient(125deg, white 75%, #cf3142 100%);
+          img {
+            height: 80%;
+          }
+          .info {
+            width: 100%;
+            h2 {
+              font-size: 1.8rem;
+              margin-bottom: 0.5rem;
+            }
+          }
         }
       }
     }
